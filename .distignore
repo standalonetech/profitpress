@@ -39,8 +39,14 @@ Thumbs.db
 # Tests and build artifacts
 /tests
 /build
+/dist
 /.phpunit.result.cache
 /coverage
 
 # Docs that are for contributors, not end users
 /RELEASING.md
+/README.md
+/CLAUDE.md
+
+# AI tooling
+/.claude

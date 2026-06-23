@@ -7,6 +7,7 @@ composer.lock
 
 # Build & test artifacts
 /build/
+/dist/
 .phpunit.result.cache
 coverage/
 

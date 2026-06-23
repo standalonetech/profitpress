@@ -6,7 +6,7 @@ Tested up to: 7.0
 Requires PHP: 7.4
 WC requires at least: 8.2
 WC tested up to: 9.5
-Stable tag: 0.4.0
+Stable tag: 1.0.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,7 +26,7 @@ It then turns that data into real profit analytics: a dedicated Reports page wit
 
 == Changelog ==
 
-= 0.4.0 =
+= 1.0.0 =
 * New top-level ProfitPress admin menu with Reports and Settings pages.
 * Profit reporting: revenue, net profit, margin, and product performance by date range.
 * Dashboard summary widget and order-level profit CSV export.

@@ -3,7 +3,7 @@
  * Plugin Name:       ProfitPress — Real Profit Analytics for WooCommerce
  * Plugin URI:        https://standalonetech.com/
  * Description:       Track the real profit of your WooCommerce store by capturing cost of goods (COGS) and snapshotting it onto historical orders.
- * Version:           0.4.0
+ * Version:           1.0.0
  * Requires Plugins:  woocommerce
  * Author:            StandaloneTech
  * Author URI:        https://standalonetech.com/
@@ -19,7 +19,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'PROFITPRESS_VERSION', '0.4.0' );
+define( 'PROFITPRESS_VERSION', '1.0.0' );
 define( 'PROFITPRESS_FILE', __FILE__ );
 define( 'PROFITPRESS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'PROFITPRESS_URL', plugin_dir_url( __FILE__ ) );
