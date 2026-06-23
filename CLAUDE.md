@@ -20,11 +20,18 @@ composer analyze      # phpstan analyse — level 6, src/ only (config: phpstan.
 composer test         # phpunit
 ```
 
-There is **no `tests/` directory yet** — `composer test` is wired (PSR-4 maps
-`ProfitPress\Tests\` → `tests/`) but no tests exist. PHPStan scans `src/` only and
-uses WooCommerce stubs. After any code change, run `composer lint && composer analyze`
-before considering the work done; the WordPress Coding Standards are strict (escaping,
-i18n text domain `profitpress`, prefixing) and enforced for WordPress.org publication.
+Tests live in `tests/` (PSR-4 maps `ProfitPress\Tests\` → `tests/`), configured by
+`phpunit.xml.dist` with `tests/bootstrap.php`. The bootstrap **defines `ABSPATH` before
+loading the autoloader** — every `src/` class guards itself with `defined( 'ABSPATH' ) || exit;`,
+so without this the file under test would terminate the run. The suite currently covers the
+pure, WordPress-free units (`tests/Unit/`, starting with `COGSCalculator`); WP/WooCommerce-coupled
+classes would need a WP test harness (e.g. wp-phpunit / Brain Monkey) that is not yet set up.
+`composer test` runs PHPUnit; PHPStan scans `src/` only with WooCommerce stubs. After any code
+change, run `composer lint && composer analyze && composer test` before considering the work done;
+the WordPress Coding Standards are strict (escaping, i18n text domain `profitpress`, prefixing) and
+enforced for WordPress.org publication. `phpcs.xml.dist` relaxes a few sniffs under `/tests/*`
+(StudlyCase filenames, mandatory docblocks, `WP_Filesystem`) since those are runtime-code rules
+that don't fit test infrastructure.
 
 There is no JS/CSS build step — `assets/css` and `assets/js` ship as-is.
 

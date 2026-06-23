@@ -100,9 +100,9 @@ final class ProductFields {
 	/**
 	 * Render the COGS and supplier fields for a single variation.
 	 *
-	 * @param int      $loop           Position of the variation in the editor loop.
-	 * @param array    $variation_data Variation data (unused).
-	 * @param \WP_Post $variation      The variation post object.
+	 * @param int                  $loop           Position of the variation in the editor loop.
+	 * @param array<string, mixed> $variation_data Variation data (unused).
+	 * @param \WP_Post             $variation      The variation post object.
 	 * @return void
 	 */
 	public function render_variation_fields( int $loop, array $variation_data, \WP_Post $variation ): void {

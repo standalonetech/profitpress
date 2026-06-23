@@ -23,6 +23,28 @@
 	<!-- We use PSR-4 autoloading (StudlyCase filenames), not WP class-*.php naming. -->
 	<rule ref="WordPress.Files.FileName">
 		<exclude-pattern>/src/*</exclude-pattern>
+		<exclude-pattern>/tests/*</exclude-pattern>
+	</rule>
+
+	<!-- PHPUnit test method names are self-documenting; don't require docblocks,
+	     and annotation-only docblocks (@dataProvider, @covers) are idiomatic. -->
+	<rule ref="Squiz.Commenting.FunctionComment.Missing">
+		<exclude-pattern>/tests/*</exclude-pattern>
+	</rule>
+	<rule ref="Squiz.Commenting.ClassComment.Missing">
+		<exclude-pattern>/tests/*</exclude-pattern>
+	</rule>
+	<rule ref="Generic.Commenting.DocComment.MissingShort">
+		<exclude-pattern>/tests/*</exclude-pattern>
+	</rule>
+
+	<!-- The test bootstrap runs before WordPress loads, so WP_Filesystem and the
+	     global-variable prefixing rules do not apply to it. -->
+	<rule ref="WordPress.WP.AlternativeFunctions">
+		<exclude-pattern>/tests/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<exclude-pattern>/tests/bootstrap.php</exclude-pattern>
 	</rule>
 
 	<!-- Enforce our text domain. -->

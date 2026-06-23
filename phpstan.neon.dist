@@ -6,6 +6,14 @@ parameters:
 		- profitpress.php
 	scanFiles:
 		- vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
+	# WooCommerce stubs declare many returns as non-nullable, but at real runtime
+	# (early load, edge cases) they can be null. Keep our defensive guards instead
+	# of trusting the stub/PHPDoc types as certain.
+	treatPhpDocTypesAsCertain: false
+	ignoreErrors:
+		# OrdersTableDataStore is a WooCommerce-internal class not shipped in the
+		# stubs; these calls are guarded by is_callable() at runtime (HPOS).
+		- '#Call to static method \w+\(\) on an unknown class Automattic\\WooCommerce\\Internal\\DataStores\\Orders\\OrdersTableDataStore\.#'
 
 includes:
 	- vendor/szepeviktor/phpstan-wordpress/extension.neon
