@@ -2,14 +2,14 @@
 /**
  * Cost-of-goods product editor fields.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Admin;
+namespace Profitly\Admin;
 
-use ProfitPress\COGS\ProductCOGS;
+use Profitly\COGS\ProductCOGS;
 use WC_Product;
 
 defined( 'ABSPATH' ) || exit;
@@ -30,16 +30,13 @@ final class ProductFields {
 	 * @return void
 	 */
 	public function register_hooks(): void {
-		// Simple product: render fields and enqueue admin assets.
+		// Simple product: render and save fields.
 		add_action( 'woocommerce_product_options_pricing', array( $this, 'render_simple_fields' ) );
 		add_action( 'woocommerce_admin_process_product_object', array( $this, 'save_simple_fields' ) );
 
 		// Variations: render fields per variation and save them.
 		add_action( 'woocommerce_variation_options_pricing', array( $this, 'render_variation_fields' ), 10, 3 );
 		add_action( 'woocommerce_save_product_variation', array( $this, 'save_variation_fields' ), 10, 2 );
-
-		// Editor assets.
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 	}
 
 	/**
@@ -54,24 +51,24 @@ final class ProductFields {
 
 		woocommerce_wp_text_input(
 			array(
-				'id'          => ProductCOGS::META_COGS,
-				'value'       => ProductCOGS::get( $product_id ),
-				'label'       => $this->cost_label(),
-				'data_type'   => 'price',
-				'desc_tip'    => true,
-				'description' => $this->cost_tooltip(),
-				'wrapper_class' => 'profitpress-cogs-field',
+				'id'            => ProductCOGS::META_COGS,
+				'value'         => ProductCOGS::get( $product_id ),
+				'label'         => $this->cost_label(),
+				'data_type'     => 'price',
+				'desc_tip'      => true,
+				'description'   => $this->cost_tooltip(),
+				'wrapper_class' => 'profitly-cogs-field',
 			)
 		);
 
 		woocommerce_wp_text_input(
 			array(
-				'id'          => ProductCOGS::META_SUPPLIER,
-				'value'       => ProductCOGS::get_supplier( $product_id ),
-				'label'       => __( 'Supplier name', 'profitpress' ),
-				'desc_tip'    => true,
-				'description' => __( 'Optional. Who you buy this product from.', 'profitpress' ),
-				'wrapper_class' => 'profitpress-supplier-field',
+				'id'            => ProductCOGS::META_SUPPLIER,
+				'value'         => ProductCOGS::get_supplier( $product_id ),
+				'label'         => __( 'Supplier name', 'profitly' ),
+				'desc_tip'      => true,
+				'description'   => __( 'Optional. Who you buy this product from.', 'profitly' ),
+				'wrapper_class' => 'profitly-supplier-field',
 			)
 		);
 	}
@@ -85,7 +82,7 @@ final class ProductFields {
 	public function save_simple_fields( WC_Product $product ): void {
 		// phpcs:disable WordPress.Security.NonceVerification.Missing -- WooCommerce verifies the product editor nonce before this hook.
 		// On variable products the variation rows post these same keys as
-		// arrays (name="_profitpress_cogs[loop]"). Those belong to the
+		// arrays (name="_profitly_cogs[loop]"). Those belong to the
 		// per-variation save path, so only handle scalar values here.
 		if ( isset( $_POST[ ProductCOGS::META_COGS ] ) && is_scalar( $_POST[ ProductCOGS::META_COGS ] ) ) {
 			ProductCOGS::save( $product, wp_unslash( $_POST[ ProductCOGS::META_COGS ] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput -- Sanitised inside ProductCOGS::save().
@@ -120,7 +117,7 @@ final class ProductFields {
 				'data_type'     => 'price',
 				'desc_tip'      => true,
 				'description'   => $this->cost_tooltip(),
-				'wrapper_class' => 'form-row form-row-first profitpress-cogs-field',
+				'wrapper_class' => 'form-row form-row-first profitly-cogs-field',
 				'placeholder'   => ProductCOGS::get( $parent_id ),
 			)
 		);
@@ -130,8 +127,8 @@ final class ProductFields {
 				'id'            => ProductCOGS::META_SUPPLIER . '_' . $loop,
 				'name'          => ProductCOGS::META_SUPPLIER . '[' . $loop . ']',
 				'value'         => get_post_meta( $variation_id, ProductCOGS::META_SUPPLIER, true ),
-				'label'         => __( 'Supplier name', 'profitpress' ),
-				'wrapper_class' => 'form-row form-row-last profitpress-supplier-field',
+				'label'         => __( 'Supplier name', 'profitly' ),
+				'wrapper_class' => 'form-row form-row-last profitly-supplier-field',
 			)
 		);
 	}
@@ -164,40 +161,13 @@ final class ProductFields {
 	}
 
 	/**
-	 * Enqueue the admin CSS/JS on the product editor screen.
-	 *
-	 * @param string $hook_suffix The current admin page hook suffix.
-	 * @return void
-	 */
-	public function enqueue_assets( string $hook_suffix ): void {
-		if ( 'post.php' !== $hook_suffix && 'post-new.php' !== $hook_suffix ) {
-			return;
-		}
-
-		wp_enqueue_style(
-			'profitpress-admin',
-			PROFITPRESS_URL . 'assets/css/admin.css',
-			array(),
-			PROFITPRESS_VERSION
-		);
-
-		wp_enqueue_script(
-			'profitpress-admin',
-			PROFITPRESS_URL . 'assets/js/admin.js',
-			array( 'jquery' ),
-			PROFITPRESS_VERSION,
-			true
-		);
-	}
-
-	/**
 	 * Build the cost field label with the store currency symbol.
 	 *
 	 * @return string Escaped, translated label including the currency symbol.
 	 */
 	private function cost_label(): string {
 		/* translators: %s: store currency symbol. */
-		return sprintf( __( 'Cost of Goods (per unit) (%s)', 'profitpress' ), get_woocommerce_currency_symbol() );
+		return sprintf( __( 'Cost of Goods (per unit) (%s)', 'profitly' ), get_woocommerce_currency_symbol() );
 	}
 
 	/**
@@ -206,6 +176,6 @@ final class ProductFields {
 	 * @return string Translated tooltip text.
 	 */
 	private function cost_tooltip(): string {
-		return __( 'Your actual cost to acquire or produce one unit. Used to calculate profit. Changing this value does NOT affect past orders.', 'profitpress' );
+		return __( 'Your actual cost to acquire or produce one unit. Used to calculate profit. Changing this value does NOT affect past orders.', 'profitly' );
 	}
 }

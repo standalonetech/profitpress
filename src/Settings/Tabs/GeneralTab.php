@@ -2,12 +2,12 @@
 /**
  * General settings tab.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Settings\Tabs;
+namespace Profitly\Settings\Tabs;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,7 +29,7 @@ final class GeneralTab implements TabInterface {
 	 * {@inheritDoc}
 	 */
 	public function get_label(): string {
-		return __( 'General', 'profitpress' );
+		return __( 'General', 'profitly' );
 	}
 
 	/**
@@ -43,14 +43,14 @@ final class GeneralTab implements TabInterface {
 		$checked = ! empty( $general['delete_on_uninstall'] );
 
 		echo '<table class="form-table" role="presentation"><tbody><tr>';
-		echo '<th scope="row">' . esc_html__( 'Data retention', 'profitpress' ) . '</th>';
+		echo '<th scope="row">' . esc_html__( 'Data retention', 'profitly' ) . '</th>';
 		echo '<td>';
 		printf(
-			'<label><input type="checkbox" name="profitpress_settings[general][delete_on_uninstall]" value="1" %1$s /> %2$s</label>',
+			'<label><input type="checkbox" name="profitly_settings[general][delete_on_uninstall]" value="1" %1$s /> %2$s</label>',
 			checked( $checked, true, false ),
-			esc_html__( 'Delete all ProfitPress data when this plugin is uninstalled', 'profitpress' )
+			esc_html__( 'Delete all Profitly data when this plugin is uninstalled', 'profitly' )
 		);
-		echo '<p class="description">' . esc_html__( 'When enabled, uninstalling ProfitPress will permanently remove all COGS data, settings, and order profit snapshots. This cannot be undone.', 'profitpress' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'When enabled, uninstalling Profitly will permanently remove all COGS data, settings, and order profit snapshots. This cannot be undone.', 'profitly' ) . '</p>';
 		echo '</td>';
 		echo '</tr></tbody></table>';
 	}
@@ -65,7 +65,7 @@ final class GeneralTab implements TabInterface {
 	public function sanitize( array $input, array $existing ): array {
 		unset( $existing );
 
-		$general = $input['profitpress_settings']['general'] ?? array();
+		$general = $input['profitly_settings']['general'] ?? array();
 		$delete  = is_array( $general ) && ! empty( $general['delete_on_uninstall'] );
 
 		return array(

@@ -1,6 +1,6 @@
 {
-	"name": "profitpress/profitpress",
-	"description": "ProfitPress — Real Profit Analytics for WooCommerce.",
+	"name": "profitly/profitly",
+	"description": "Profitly — Profit Analytics for WooCommerce.",
 	"type": "wordpress-plugin",
 	"license": "GPL-2.0-or-later",
 	"require": {
@@ -15,12 +15,12 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"ProfitPress\\": "src/"
+			"Profitly\\": "src/"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"ProfitPress\\Tests\\": "tests/"
+			"Profitly\\Tests\\": "tests/"
 		}
 	},
 	"config": {

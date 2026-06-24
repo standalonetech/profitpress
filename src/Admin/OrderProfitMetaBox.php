@@ -2,15 +2,15 @@
 /**
  * Profit breakdown metabox on the order edit screen.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Admin;
+namespace Profitly\Admin;
 
-use ProfitPress\Profit\OrderProfitCalculator;
-use ProfitPress\Shipping\ShippingCostResolver;
+use Profitly\Profit\OrderProfitCalculator;
+use Profitly\Shipping\ShippingCostResolver;
 use WC_Order;
 use WP_Post;
 
@@ -30,7 +30,7 @@ final class OrderProfitMetaBox {
 	/**
 	 * Nonce action for saving the override field.
 	 */
-	private const NONCE = 'profitpress_save_order_profit';
+	private const NONCE = 'profitly_save_order_profit';
 
 	/**
 	 * Register WordPress/WooCommerce hooks for this component.
@@ -60,8 +60,8 @@ final class OrderProfitMetaBox {
 
 		foreach ( array_unique( array_filter( $screens ) ) as $screen ) {
 			add_meta_box(
-				'profitpress_order_profit',
-				__( 'Profit Breakdown', 'profitpress' ),
+				'profitly_order_profit',
+				__( 'Profit Breakdown', 'profitly' ),
 				array( $this, 'render' ),
 				$screen,
 				'side',
@@ -80,28 +80,28 @@ final class OrderProfitMetaBox {
 		$order = $post_or_order instanceof WC_Order ? $post_or_order : wc_get_order( $post_or_order instanceof WP_Post ? $post_or_order->ID : $post_or_order );
 
 		if ( ! $order instanceof WC_Order ) {
-			echo '<p>' . esc_html__( 'Profit data is unavailable for this order.', 'profitpress' ) . '</p>';
+			echo '<p>' . esc_html__( 'Profit data is unavailable for this order.', 'profitly' ) . '</p>';
 			return;
 		}
 
 		$data     = OrderProfitCalculator::calculate( $order );
 		$currency = $data['currency'];
 
-		wp_nonce_field( self::NONCE, 'profitpress_profit_nonce' );
+		wp_nonce_field( self::NONCE, 'profitly_profit_nonce' );
 
 		if ( $data['has_missing_cogs'] ) {
-			echo '<p style="color:#b32d2e;">' . esc_html__( 'Some line items have no recorded cost. Profit calculation may be incomplete.', 'profitpress' ) . '</p>';
+			echo '<p style="color:#b32d2e;">' . esc_html__( 'Some line items have no recorded cost. Profit calculation may be incomplete.', 'profitly' ) . '</p>';
 		}
 
 		$rows = array(
-			__( 'Revenue', 'profitpress' )       => $data['revenue'],
-			__( 'Cost of goods', 'profitpress' ) => $data['cogs'],
-			__( 'Gateway fee', 'profitpress' )   => $data['gateway_fee'],
-			__( 'Shipping cost', 'profitpress' ) => $data['shipping_cost'],
+			__( 'Revenue', 'profitly' )       => $data['revenue'],
+			__( 'Cost of goods', 'profitly' ) => $data['cogs'],
+			__( 'Gateway fee', 'profitly' )   => $data['gateway_fee'],
+			__( 'Shipping cost', 'profitly' ) => $data['shipping_cost'],
 		);
 
 		if ( 0.0 !== (float) $data['refund_loss'] ) {
-			$rows[ __( 'Lost fees on refunds', 'profitpress' ) ] = $data['refund_loss'];
+			$rows[ __( 'Lost fees on refunds', 'profitly' ) ] = $data['refund_loss'];
 		}
 
 		echo '<table class="widefat striped" style="margin-bottom:10px;"><tbody>';
@@ -116,21 +116,21 @@ final class OrderProfitMetaBox {
 
 		printf(
 			'<tr><td><strong>%1$s</strong></td><td style="text-align:right;"><strong>%2$s</strong></td></tr>',
-			esc_html__( 'Gross profit', 'profitpress' ),
+			esc_html__( 'Gross profit', 'profitly' ),
 			wp_kses_post( wc_price( (float) $data['gross_profit'], array( 'currency' => $currency ) ) )
 		);
 
 		$net_color = (float) $data['net_profit'] >= 0 ? '#1a7f37' : '#b32d2e';
 		printf(
 			'<tr><td><strong>%1$s</strong></td><td style="text-align:right;color:%2$s;"><strong>%3$s</strong></td></tr>',
-			esc_html__( 'Net profit', 'profitpress' ),
+			esc_html__( 'Net profit', 'profitly' ),
 			esc_attr( $net_color ),
 			wp_kses_post( wc_price( (float) $data['net_profit'], array( 'currency' => $currency ) ) )
 		);
 
 		printf(
 			'<tr><td>%1$s</td><td style="text-align:right;">%2$s%%</td></tr>',
-			esc_html__( 'Net margin', 'profitpress' ),
+			esc_html__( 'Net margin', 'profitly' ),
 			esc_html( $data['margin_percent'] )
 		);
 
@@ -139,12 +139,12 @@ final class OrderProfitMetaBox {
 		// Editable override.
 		$override = (string) $order->get_meta( ShippingCostResolver::META_OVERRIDE, true );
 		printf(
-			'<p><label for="profitpress_shipping_override"><strong>%1$s</strong></label><br />%2$s <input type="number" step="0.01" min="0" id="profitpress_shipping_override" name="profitpress_shipping_override" value="%3$s" style="width:120px;" /></p>',
-			esc_html__( 'Override shipping cost for this order', 'profitpress' ),
+			'<p><label for="profitly_shipping_override"><strong>%1$s</strong></label><br />%2$s <input type="number" step="0.01" min="0" id="profitly_shipping_override" name="profitly_shipping_override" value="%3$s" style="width:120px;" /></p>',
+			esc_html__( 'Override shipping cost for this order', 'profitly' ),
 			esc_html( get_woocommerce_currency_symbol( $currency ) ),
 			esc_attr( $override )
 		);
-		echo '<p class="description">' . esc_html__( 'Leave blank to use the zone estimate snapshotted at order creation.', 'profitpress' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Leave blank to use the zone estimate snapshotted at order creation.', 'profitly' ) . '</p>';
 	}
 
 	/**
@@ -154,7 +154,7 @@ final class OrderProfitMetaBox {
 	 * @return void
 	 */
 	public function save( int $order_id ): void {
-		if ( ! isset( $_POST['profitpress_profit_nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['profitpress_profit_nonce'] ) ), self::NONCE ) ) {
+		if ( ! isset( $_POST['profitly_profit_nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['profitly_profit_nonce'] ) ), self::NONCE ) ) {
 			return;
 		}
 
@@ -168,7 +168,7 @@ final class OrderProfitMetaBox {
 			return;
 		}
 
-		$raw = isset( $_POST['profitpress_shipping_override'] ) ? sanitize_text_field( wp_unslash( $_POST['profitpress_shipping_override'] ) ) : '';
+		$raw = isset( $_POST['profitly_shipping_override'] ) ? sanitize_text_field( wp_unslash( $_POST['profitly_shipping_override'] ) ) : '';
 
 		if ( '' === $raw ) {
 			$order->delete_meta_data( ShippingCostResolver::META_OVERRIDE );

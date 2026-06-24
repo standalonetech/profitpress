@@ -1,4 +1,4 @@
-# ProfitPress — Real Profit Analytics for WooCommerce
+# Profitly — Real Profit Analytics for WooCommerce
 
 Track the real profit of your WooCommerce store by capturing cost of goods (COGS) and snapshotting it onto historical orders.
 
@@ -6,7 +6,7 @@ Track the real profit of your WooCommerce store by capturing cost of goods (COGS
 
 ## Overview
 
-ProfitPress adds a Cost of Goods (COGS) field to your WooCommerce products and variations, then snapshots that cost onto each order line item at checkout. Because the cost is captured at the moment of sale, changing a supplier price later never rewrites your historical profit.
+Profitly adds a Cost of Goods (COGS) field to your WooCommerce products and variations, then snapshots that cost onto each order line item at checkout. Because the cost is captured at the moment of sale, changing a supplier price later never rewrites your historical profit.
 
 It then turns that data into real profit analytics: a dedicated Reports page with revenue, net profit, margin, and best/worst-selling products by date range, a dashboard summary widget, a CSV export, and per-order gateway fee and shipping cost accounting.
 
@@ -20,7 +20,7 @@ It then turns that data into real profit analytics: a dedicated Reports page wit
 - **Gateway fee accounting** — model per-gateway payment processing fees.
 - **Shipping cost model** — carrier estimate, customer-paid, or included, with per-zone estimates.
 - **HPOS compatible** — works with WooCommerce High-Performance Order Storage.
-- **Standalone admin menu** — a top-level ProfitPress menu with consolidated settings.
+- **Standalone admin menu** — a top-level Profitly menu with consolidated settings.
 
 ## Requirements
 
@@ -32,9 +32,9 @@ It then turns that data into real profit analytics: a dedicated Reports page wit
 
 ## Installation
 
-1. Upload the `profitpress` folder to the `/wp-content/plugins/` directory, or install it through the Plugins screen in WordPress.
+1. Upload the `profitly` folder to the `/wp-content/plugins/` directory, or install it through the Plugins screen in WordPress.
 2. Activate the plugin through the **Plugins** menu in WordPress.
-3. Enter your product costs and configure gateway fees and shipping costs under the **ProfitPress** menu.
+3. Enter your product costs and configure gateway fees and shipping costs under the **Profitly** menu.
 
 ## Development
 
@@ -57,13 +57,13 @@ composer analyze
 composer test
 ```
 
-Source code is namespaced under `ProfitPress\` (PSR-4, `src/`).
+Source code is namespaced under `Profitly\` (PSR-4, `src/`).
 
 ## Architecture
 
 | Area | Location |
 |------|----------|
-| Plugin bootstrap | `profitpress.php`, `src/Plugin.php` |
+| Plugin bootstrap | `profitly.php`, `src/Plugin.php` |
 | COGS data layer | `src/COGS/` |
 | Profit calculation & snapshotting | `src/Profit/` |
 | Gateway fees | `src/Fees/` |

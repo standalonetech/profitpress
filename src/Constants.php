@@ -2,12 +2,12 @@
 /**
  * Shared plugin-wide constants.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress;
+namespace Profitly;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -21,14 +21,14 @@ defined( 'ABSPATH' ) || exit;
 final class Constants {
 
 	/**
-	 * The single wp_options row holding every ProfitPress setting.
+	 * The single wp_options row holding every Profitly setting.
 	 */
-	public const OPTION = 'profitpress_settings';
+	public const OPTION = 'profitly_settings';
 
 	/**
 	 * The settings group passed to register_setting().
 	 */
-	public const OPTION_GROUP = 'profitpress_settings_group';
+	public const OPTION_GROUP = 'profitly_settings_group';
 
 	/**
 	 * Capability required to view reports (read-only screens).

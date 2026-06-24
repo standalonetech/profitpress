@@ -2,12 +2,12 @@
 /**
  * Transient-backed cache for report aggregations.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Reports;
+namespace Profitly\Reports;
 
 use DateTimeImmutable;
 
@@ -28,7 +28,7 @@ final class ReportCache {
 	/**
 	 * Option holding the monotonically increasing cache version.
 	 */
-	private const VERSION_OPTION = 'profitpress_report_cache_version';
+	private const VERSION_OPTION = 'profitly_report_cache_version';
 
 	/**
 	 * Default time-to-live, in seconds (15 minutes).

@@ -2,27 +2,27 @@
 /**
  * Main plugin container.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress;
+namespace Profitly;
 
-use ProfitPress\Admin\Menu;
-use ProfitPress\Admin\OrderProfitMetaBox;
-use ProfitPress\Admin\ProductFields;
-use ProfitPress\Admin\ProductListColumn;
-use ProfitPress\COGS\OrderLineCOGS;
-use ProfitPress\COGS\ProductCOGS;
-use ProfitPress\Compatibility\HPOS;
-use ProfitPress\Dashboard\DashboardWidget;
-use ProfitPress\Export\CsvExporter;
-use ProfitPress\Profit\OrderSnapshot;
-use ProfitPress\Reports\ReportCache;
-use ProfitPress\Reports\ReportsPage;
-use ProfitPress\Settings\SettingsHandler;
-use ProfitPress\Settings\SettingsRegistry;
+use Profitly\Admin\Assets;
+use Profitly\Admin\Menu;
+use Profitly\Admin\OrderProfitMetaBox;
+use Profitly\Admin\ProductFields;
+use Profitly\Admin\ProductListColumn;
+use Profitly\COGS\OrderLineCOGS;
+use Profitly\COGS\ProductCOGS;
+use Profitly\Compatibility\HPOS;
+use Profitly\Dashboard\DashboardWidget;
+use Profitly\Export\CsvExporter;
+use Profitly\Profit\OrderSnapshot;
+use Profitly\Reports\ReportCache;
+use Profitly\Settings\SettingsHandler;
+use Profitly\Settings\SettingsRegistry;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -79,12 +79,12 @@ final class Plugin {
 
 		// Admin menu + settings.
 		( new Menu() )->register_hooks();
+		( new Assets() )->register_hooks();
 		( new SettingsRegistry() )->register_hooks();
 		( new SettingsHandler() )->register_hooks();
 
 		// Reporting layer.
 		( new ReportCache() )->register_hooks();
-		( new ReportsPage() )->register_hooks();
 		( new DashboardWidget() )->register_hooks();
 		( new CsvExporter() )->register_hooks();
 

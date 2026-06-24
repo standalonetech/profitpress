@@ -2,23 +2,23 @@
 /**
  * Settings option registration, defaults, tab registry, and read accessors.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Settings;
+namespace Profitly\Settings;
 
-use ProfitPress\Constants;
-use ProfitPress\Settings\Tabs\GatewayFeesTab;
-use ProfitPress\Settings\Tabs\GeneralTab;
-use ProfitPress\Settings\Tabs\ShippingCostsTab;
-use ProfitPress\Settings\Tabs\TabInterface;
+use Profitly\Constants;
+use Profitly\Settings\Tabs\GatewayFeesTab;
+use Profitly\Settings\Tabs\GeneralTab;
+use Profitly\Settings\Tabs\ShippingCostsTab;
+use Profitly\Settings\Tabs\TabInterface;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * The single source of truth for the `profitpress_settings` option.
+ * The single source of truth for the `profitly_settings` option.
  *
  * It registers the option with WordPress, owns the default structure and the
  * list of tabs, and exposes typed read accessors so every consumer (snapshot,
@@ -31,7 +31,7 @@ final class SettingsRegistry {
 	/**
 	 * Settings schema version stored under the `_version` key.
 	 */
-	public const VERSION = '1.0.0';
+	public const VERSION = '1.0.1';
 
 	/**
 	 * The registered tab classes, in display order.

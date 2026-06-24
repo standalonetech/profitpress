@@ -2,16 +2,16 @@
 /**
  * Order-level profit CSV export.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Export;
+namespace Profitly\Export;
 
 use DateTimeImmutable;
-use ProfitPress\Profit\OrderProfitCalculator;
-use ProfitPress\Reports\ProfitAggregator;
+use Profitly\Profit\OrderProfitCalculator;
+use Profitly\Reports\ProfitAggregator;
 use WC_Order;
 
 defined( 'ABSPATH' ) || exit;
@@ -31,7 +31,7 @@ final class CsvExporter {
 	/**
 	 * The admin-post action name.
 	 */
-	public const ACTION = 'profitpress_export_csv';
+	public const ACTION = 'profitly_export_csv';
 
 	/**
 	 * Capability required to export.
@@ -59,7 +59,7 @@ final class CsvExporter {
 	 */
 	public function handle(): void {
 		if ( ! current_user_can( self::CAPABILITY ) ) {
-			wp_die( esc_html__( 'You do not have permission to export ProfitPress reports.', 'profitpress' ) );
+			wp_die( esc_html__( 'You do not have permission to export Profitly reports.', 'profitly' ) );
 		}
 
 		check_admin_referer( self::ACTION );
@@ -81,7 +81,7 @@ final class CsvExporter {
 	 * @return void
 	 */
 	private function stream(): void {
-		$filename = 'profitpress-report-' . gmdate( 'Y-m-d' ) . '.csv';
+		$filename = 'profitly-report-' . gmdate( 'Y-m-d' ) . '.csv';
 
 		nocache_headers();
 		header( 'Content-Type: text/csv; charset=utf-8' );
@@ -119,7 +119,7 @@ final class CsvExporter {
 				 * @param array<string, string> $row   Column key => value.
 				 * @param WC_Order               $order The order.
 				 */
-				$row = apply_filters( 'profitpress_csv_export_row', $row, $order );
+				$row = apply_filters( 'profitly_csv_export_row', $row, $order );
 
 				fputcsv( $output, array_values( $row ) );
 			}
@@ -139,18 +139,18 @@ final class CsvExporter {
 	 */
 	private static function columns(): array {
 		$columns = array(
-			'order_id'       => __( 'Order ID', 'profitpress' ),
-			'order_date'     => __( 'Order Date', 'profitpress' ),
-			'status'         => __( 'Status', 'profitpress' ),
-			'customer_email' => __( 'Customer Email', 'profitpress' ),
-			'currency'       => __( 'Currency', 'profitpress' ),
-			'revenue'        => __( 'Revenue', 'profitpress' ),
-			'cogs'           => __( 'COGS', 'profitpress' ),
-			'gateway_fee'    => __( 'Gateway Fee', 'profitpress' ),
-			'shipping_cost'  => __( 'Shipping Cost (merchant)', 'profitpress' ),
-			'refund_loss'    => __( 'Refund Loss', 'profitpress' ),
-			'net_profit'     => __( 'Net Profit', 'profitpress' ),
-			'margin_percent' => __( 'Margin %', 'profitpress' ),
+			'order_id'       => __( 'Order ID', 'profitly' ),
+			'order_date'     => __( 'Order Date', 'profitly' ),
+			'status'         => __( 'Status', 'profitly' ),
+			'customer_email' => __( 'Customer Email', 'profitly' ),
+			'currency'       => __( 'Currency', 'profitly' ),
+			'revenue'        => __( 'Revenue', 'profitly' ),
+			'cogs'           => __( 'COGS', 'profitly' ),
+			'gateway_fee'    => __( 'Gateway Fee', 'profitly' ),
+			'shipping_cost'  => __( 'Shipping Cost (merchant)', 'profitly' ),
+			'refund_loss'    => __( 'Refund Loss', 'profitly' ),
+			'net_profit'     => __( 'Net Profit', 'profitly' ),
+			'margin_percent' => __( 'Margin %', 'profitly' ),
 		);
 
 		/**
@@ -158,7 +158,7 @@ final class CsvExporter {
 		 *
 		 * @param array<string, string> $columns Column key => header label.
 		 */
-		return apply_filters( 'profitpress_csv_export_columns', $columns );
+		return apply_filters( 'profitly_csv_export_columns', $columns );
 	}
 
 	/**

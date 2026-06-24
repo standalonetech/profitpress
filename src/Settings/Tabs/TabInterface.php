@@ -2,12 +2,12 @@
 /**
  * Contract every settings tab implements.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Settings\Tabs;
+namespace Profitly\Settings\Tabs;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -16,8 +16,8 @@ defined( 'ABSPATH' ) || exit;
  *
  * Each tab knows how to render itself given the full settings array, and how to
  * sanitise its own slice of submitted input back into a partial settings array.
- * Tabs own neither persistence nor navigation — {@see \ProfitPress\Settings\SettingsPage}
- * renders the chrome and {@see \ProfitPress\Settings\SettingsHandler} writes the option.
+ * Tabs own neither persistence nor navigation — {@see \Profitly\Settings\SettingsPage}
+ * renders the chrome and {@see \Profitly\Settings\SettingsHandler} writes the option.
  */
 interface TabInterface {
 
@@ -31,7 +31,7 @@ interface TabInterface {
 	/**
 	 * The tab's human-readable, translated label.
 	 *
-	 * @return string e.g. __( 'Gateway Fees', 'profitpress' ).
+	 * @return string e.g. __( 'Gateway Fees', 'profitly' ).
 	 */
 	public function get_label(): string;
 

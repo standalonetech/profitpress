@@ -2,12 +2,12 @@
 /**
  * WooCommerce feature compatibility declarations.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Compatibility;
+namespace Profitly\Compatibility;
 
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
 
@@ -42,7 +42,7 @@ final class HPOS {
 			return;
 		}
 
-		FeaturesUtil::declare_compatibility( 'custom_order_tables', PROFITPRESS_FILE, true );
-		FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', PROFITPRESS_FILE, true );
+		FeaturesUtil::declare_compatibility( 'custom_order_tables', PROFITLY_FILE, true );
+		FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', PROFITLY_FILE, true );
 	}
 }

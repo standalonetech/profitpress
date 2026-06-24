@@ -1,6 +1,6 @@
-# Releasing ProfitPress
+# Releasing Profitly
 
-This document describes how to package and publish ProfitPress to the
+This document describes how to package and publish Profitly to the
 [WordPress.org plugin directory](https://wordpress.org/plugins/), which
 distributes plugins via SVN.
 
@@ -17,11 +17,11 @@ listed there — it is meant to ship.
 
 > As of this scaffold there are **no runtime Composer dependencies** (only
 > `php >=7.4`), so a production `vendor/` contains just the autoloader. That is
-> expected and sufficient to load the `ProfitPress\` classes via PSR-4.
+> expected and sufficient to load the `Profitly\` classes via PSR-4.
 
 ## Prerequisites
 
-- SVN access to `https://plugins.svn.wordpress.org/profitpress/`
+- SVN access to `https://plugins.svn.wordpress.org/profitly/`
 - [WP-CLI](https://wp-cli.org/) with the `dist-archive` command:
   `wp package install wp-cli/dist-archive-command`
 - Composer
@@ -39,7 +39,7 @@ composer test      # phpunit
 
 Then bump the version in **three** places and keep them identical:
 
-- `profitpress.php` header `Version:` and the `PROFITPRESS_VERSION` constant
+- `profitly.php` header `Version:` and the `PROFITLY_VERSION` constant
 - `readme.txt` `Stable tag:`
 - `RELEASING.md` / `CHANGELOG` notes as applicable
 
@@ -55,15 +55,15 @@ Install **without** dev dependencies, then build the distributable zip. The
 # Production autoloader + runtime deps only
 composer install --no-dev --optimize-autoloader
 
-# Produce profitpress.zip honoring .distignore
-wp dist-archive . ./profitpress.zip
+# Produce profitly.zip honoring .distignore
+wp dist-archive . ./profitly.zip
 ```
 
 Inspect the zip before shipping — confirm `vendor/autoload.php` is present and
 that no `tests/`, `phpcs.xml.dist`, or `vendor/bin/` entries leaked in:
 
 ```bash
-unzip -l profitpress.zip | less
+unzip -l profitly.zip | less
 ```
 
 > After building, restore your dev environment with `composer install` so the
@@ -79,15 +79,15 @@ WordPress.org SVN has three top-level directories:
 
 ```bash
 # One-time checkout
-svn checkout https://plugins.svn.wordpress.org/profitpress/ profitpress-svn
-cd profitpress-svn
+svn checkout https://plugins.svn.wordpress.org/profitly/ profitly-svn
+cd profitly-svn
 
 # Sync the built files into trunk (use the unzipped production build, not the
 # git working tree). rsync with the same exclusions is a common alternative to
 # extracting the zip.
 rsync -av --delete \
   --exclude='.svn' \
-  /path/to/built/profitpress/ trunk/
+  /path/to/built/profitly/ trunk/
 
 # Stage adds/removes
 svn add --force trunk/* --auto-props --parents -q
@@ -114,7 +114,7 @@ consistently.
 
 ## Future note: dependency collision safety
 
-Once ProfitPress gains real runtime Composer dependencies, consider scoping
+Once Profitly gains real runtime Composer dependencies, consider scoping
 their namespaces with [php-scoper](https://github.com/humbug/php-scoper) or
 [Strauss](https://github.com/BrianHenryIE/strauss) so a shared library can't
 fatally collide with another plugin shipping the same package. Not needed today.

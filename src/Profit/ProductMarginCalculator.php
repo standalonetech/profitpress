@@ -2,15 +2,15 @@
 /**
  * Per-product gross margin.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Profit;
+namespace Profitly\Profit;
 
-use ProfitPress\COGS\COGSCalculator;
-use ProfitPress\COGS\ProductCOGS;
+use Profitly\COGS\COGSCalculator;
+use Profitly\COGS\ProductCOGS;
 use WC_Product;
 
 defined( 'ABSPATH' ) || exit;

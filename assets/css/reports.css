@@ -1,19 +1,19 @@
 /**
- * ProfitPress reports + dashboard widget styles.
+ * Profitly reports + dashboard widget styles.
  *
  * Only declares what WooCommerce/WP admin CSS does not already provide: the
  * KPI card grid, the side-by-side tables, delta colouring, and widget layout.
  */
 
 /* Date range selector */
-.profitpress-range-selector {
+.profitly-range-selector {
 	margin: 16px 0 20px;
 	display: flex;
 	gap: 6px;
 }
 
 /* Empty state */
-.profitpress-empty-state {
+.profitly-empty-state {
 	padding: 32px;
 	text-align: center;
 	color: #50575e;
@@ -21,7 +21,7 @@
 }
 
 /* Summary cards */
-.profitpress-cards {
+.profitly-cards {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	gap: 16px;
@@ -29,25 +29,25 @@
 }
 
 @media screen and (max-width: 1100px) {
-	.profitpress-cards {
+	.profitly-cards {
 		grid-template-columns: repeat(2, 1fr);
 	}
 }
 
 @media screen and (max-width: 600px) {
-	.profitpress-cards {
+	.profitly-cards {
 		grid-template-columns: 1fr;
 	}
 }
 
-.profitpress-card {
+.profitly-card {
 	padding: 16px 18px;
 	background: #fff;
 	border: 1px solid #e0e0e0;
 	border-radius: 4px;
 }
 
-.profitpress-card__label {
+.profitly-card__label {
 	font-size: 12px;
 	text-transform: uppercase;
 	letter-spacing: 0.04em;
@@ -55,44 +55,44 @@
 	margin-bottom: 6px;
 }
 
-.profitpress-card__value {
+.profitly-card__value {
 	font-size: 24px;
 	font-weight: 600;
 	line-height: 1.2;
 	color: #1d2327;
 }
 
-.profitpress-card__period {
+.profitly-card__period {
 	font-size: 12px;
 	color: #646970;
 	margin: 4px 0 8px;
 }
 
 /* Deltas */
-.profitpress-delta {
+.profitly-delta {
 	font-weight: 600;
 	font-size: 12px;
 }
 
-.profitpress-delta-up {
+.profitly-delta-up {
 	color: #1a7f37;
 }
 
-.profitpress-delta-down {
+.profitly-delta-down {
 	color: #b32d2e;
 }
 
-.profitpress-delta-neutral {
+.profitly-delta-neutral {
 	color: #646970;
 }
 
-.profitpress-delta-label {
+.profitly-delta-label {
 	color: #646970;
 	font-size: 11px;
 }
 
 /* Tables */
-.profitpress-tables {
+.profitly-tables {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	gap: 16px;
@@ -100,47 +100,47 @@
 }
 
 @media screen and (max-width: 960px) {
-	.profitpress-tables {
+	.profitly-tables {
 		grid-template-columns: 1fr;
 	}
 }
 
-.profitpress-table-wrap {
+.profitly-table-wrap {
 	padding: 16px 18px;
 	background: #fff;
 	border: 1px solid #e0e0e0;
 	border-radius: 4px;
 }
 
-.profitpress-table-title {
+.profitly-table-title {
 	font-size: 14px;
 	margin: 0 0 12px;
 }
 
-.profitpress-product-table .profitpress-num {
+.profitly-product-table .profitly-num {
 	text-align: right;
 	white-space: nowrap;
 }
 
-.profitpress-product-table .profitpress-loss {
+.profitly-product-table .profitly-loss {
 	color: #b32d2e;
 }
 
-.profitpress-table-empty {
+.profitly-table-empty {
 	color: #646970;
 	font-style: italic;
 }
 
-.profitpress-product-footnote {
+.profitly-product-footnote {
 	margin: 4px 0 20px;
 }
 
-.profitpress-export {
+.profitly-export {
 	margin-top: 8px;
 }
 
 /* Dashboard widget */
-.profitpress-widget__stats {
+.profitly-widget__stats {
 	display: flex;
 	gap: 16px;
 	margin: 0 0 12px;
@@ -148,35 +148,35 @@
 	list-style: none;
 }
 
-.profitpress-widget__stats li {
+.profitly-widget__stats li {
 	flex: 1;
 	margin: 0;
 }
 
-.profitpress-widget__label {
+.profitly-widget__label {
 	display: block;
 	font-size: 11px;
 	text-transform: uppercase;
 	color: #646970;
 }
 
-.profitpress-widget__value {
+.profitly-widget__value {
 	display: block;
 	font-size: 18px;
 	font-weight: 600;
 	color: #1d2327;
 }
 
-.profitpress-widget__delta {
+.profitly-widget__delta {
 	display: block;
 	margin-top: 2px;
 }
 
-.profitpress-widget__top {
+.profitly-widget__top {
 	margin: 8px 0;
 	color: #1d2327;
 }
 
-.profitpress-widget__link {
+.profitly-widget__link {
 	margin: 8px 0 0;
 }

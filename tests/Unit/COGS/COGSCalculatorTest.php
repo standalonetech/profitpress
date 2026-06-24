@@ -2,18 +2,18 @@
 /**
  * Unit tests for the decimal-safe cost-of-goods calculator.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Tests\Unit\COGS;
+namespace Profitly\Tests\Unit\COGS;
 
-use ProfitPress\COGS\COGSCalculator;
+use Profitly\COGS\COGSCalculator;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \ProfitPress\COGS\COGSCalculator
+ * @covers \Profitly\COGS\COGSCalculator
  */
 final class COGSCalculatorTest extends TestCase {
 

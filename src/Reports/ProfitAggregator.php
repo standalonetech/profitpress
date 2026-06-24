@@ -2,20 +2,20 @@
 /**
  * SQL-level profit aggregation across a date range.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Reports;
+namespace Profitly\Reports;
 
 use DateTimeImmutable;
 use DateTimeZone;
-use ProfitPress\COGS\COGSCalculator;
-use ProfitPress\COGS\OrderLineCOGS;
-use ProfitPress\Fees\GatewayFeeCalculator;
-use ProfitPress\Settings\SettingsRegistry;
-use ProfitPress\Shipping\ShippingCostResolver;
+use Profitly\COGS\COGSCalculator;
+use Profitly\COGS\OrderLineCOGS;
+use Profitly\Fees\GatewayFeeCalculator;
+use Profitly\Settings\SettingsRegistry;
+use Profitly\Shipping\ShippingCostResolver;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -31,7 +31,7 @@ defined( 'ABSPATH' ) || exit;
  * profit — is performed in PHP with bcmath via {@see COGSCalculator}, because
  * floating-point/percentage math inside MySQL is not money-safe.
  *
- * The per-order math mirrors {@see \ProfitPress\Profit\OrderProfitCalculator} so
+ * The per-order math mirrors {@see \Profitly\Profit\OrderProfitCalculator} so
  * the totals reconcile with the on-order metabox and the CSV export. The only
  * deliberate simplification is that refunds reduce COGS proportionally to
  * refunded revenue (rather than by exact refunded quantity), which keeps the
@@ -140,7 +140,7 @@ final class ProfitAggregator {
 	 */
 	public static function get_statuses(): array {
 		$statuses = apply_filters(
-			'profitpress_report_order_statuses',
+			'profitly_report_order_statuses',
 			array( 'wc-completed', 'wc-processing', 'wc-on-hold' )
 		);
 

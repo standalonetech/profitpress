@@ -2,12 +2,12 @@
 /**
  * Plugin deactivation routine.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress;
+namespace Profitly;
 
 defined( 'ABSPATH' ) || exit;
 

@@ -2,19 +2,19 @@
 /**
  * Shipping Costs settings tab.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Settings\Tabs;
+namespace Profitly\Settings\Tabs;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Shipping cost model selector plus per-zone merchant-side cost estimates.
  *
- * The model decides how ProfitPress accounts for shipping in profit: estimate
+ * The model decides how Profitly accounts for shipping in profit: estimate
  * per zone, use what the customer paid, or treat it as zero. The per-zone fields
  * only apply to the carrier-estimate model; they stay editable but are visually
  * greyed when another model is active, so switching never loses configuration.
@@ -37,7 +37,7 @@ final class ShippingCostsTab implements TabInterface {
 	 * {@inheritDoc}
 	 */
 	public function get_label(): string {
-		return __( 'Shipping Costs', 'profitpress' );
+		return __( 'Shipping Costs', 'profitly' );
 	}
 
 	/**
@@ -52,16 +52,16 @@ final class ShippingCostsTab implements TabInterface {
 		$zones    = isset( $shipping['zones'] ) && is_array( $shipping['zones'] ) ? $shipping['zones'] : array();
 		$symbol   = get_woocommerce_currency_symbol();
 
-		echo '<p>' . esc_html__( 'Choose how ProfitPress accounts for shipping costs when calculating profit. Used as a fallback when no per-order shipping cost is set.', 'profitpress' ) . '</p>';
+		echo '<p>' . esc_html__( 'Choose how Profitly accounts for shipping costs when calculating profit. Used as a fallback when no per-order shipping cost is set.', 'profitly' ) . '</p>';
 
 		// Model selector.
 		echo '<table class="form-table" role="presentation"><tbody><tr>';
-		echo '<th scope="row">' . esc_html__( 'Shipping cost model', 'profitpress' ) . '</th>';
-		echo '<td><fieldset id="profitpress-shipping-model">';
+		echo '<th scope="row">' . esc_html__( 'Shipping cost model', 'profitly' ) . '</th>';
+		echo '<td><fieldset id="profitly-shipping-model">';
 
 		foreach ( $this->model_options() as $value => $label ) {
 			printf(
-				'<label style="display:block;margin-bottom:6px;"><input type="radio" name="profitpress_settings[shipping][model]" value="%1$s" %2$s /> %3$s</label>',
+				'<label style="display:block;margin-bottom:6px;"><input type="radio" name="profitly_settings[shipping][model]" value="%1$s" %2$s /> %3$s</label>',
 				esc_attr( $value ),
 				checked( $model, $value, false ),
 				esc_html( $label )
@@ -73,9 +73,9 @@ final class ShippingCostsTab implements TabInterface {
 		// Per-zone estimates.
 		$disabled_class = 'carrier_estimate' === $model ? '' : ' is-disabled';
 
-		echo '<h2>' . esc_html__( 'Estimated cost per order, by zone', 'profitpress' ) . '</h2>';
-		echo '<p class="description">' . esc_html__( 'Your average cost to fulfil one order shipped to each zone — what YOU pay the carrier, not what the customer pays. Applies only to the per-zone estimate model.', 'profitpress' ) . '</p>';
-		echo '<table class="form-table profitpress-zone-costs' . esc_attr( $disabled_class ) . '" role="presentation" id="profitpress-zone-costs"><tbody>';
+		echo '<h2>' . esc_html__( 'Estimated cost per order, by zone', 'profitly' ) . '</h2>';
+		echo '<p class="description">' . esc_html__( 'Your average cost to fulfil one order shipped to each zone — what YOU pay the carrier, not what the customer pays. Applies only to the per-zone estimate model.', 'profitly' ) . '</p>';
+		echo '<table class="form-table profitly-zone-costs' . esc_attr( $disabled_class ) . '" role="presentation" id="profitly-zone-costs"><tbody>';
 
 		foreach ( $this->get_zones() as $zone_id => $zone_name ) {
 			$value = isset( $zones[ (string) $zone_id ] ) ? (string) $zones[ (string) $zone_id ] : '';
@@ -84,7 +84,7 @@ final class ShippingCostsTab implements TabInterface {
 			echo '<th scope="row">' . esc_html( $zone_name ) . '</th>';
 			echo '<td>';
 			printf(
-				'%1$s <input type="number" class="regular-text" step="0.01" min="0" name="profitpress_settings[shipping][zones][%2$s]" value="%3$s" placeholder="0.00" />',
+				'%1$s <input type="number" class="regular-text" step="0.01" min="0" name="profitly_settings[shipping][zones][%2$s]" value="%3$s" placeholder="0.00" />',
 				esc_html( $symbol ),
 				esc_attr( (string) $zone_id ),
 				esc_attr( $value )
@@ -94,8 +94,6 @@ final class ShippingCostsTab implements TabInterface {
 		}
 
 		echo '</tbody></table>';
-
-		$this->render_toggle_assets();
 	}
 
 	/**
@@ -108,7 +106,7 @@ final class ShippingCostsTab implements TabInterface {
 	public function sanitize( array $input, array $existing ): array {
 		unset( $existing );
 
-		$raw = $input['profitpress_settings']['shipping'] ?? array();
+		$raw = $input['profitly_settings']['shipping'] ?? array();
 		$raw = is_array( $raw ) ? $raw : array();
 
 		$model = isset( $raw['model'] ) ? (string) $raw['model'] : '';
@@ -131,36 +129,6 @@ final class ShippingCostsTab implements TabInterface {
 	}
 
 	/**
-	 * Minimal inline JS + CSS to grey out the zone fields when the model is not
-	 * the carrier estimate. Fields stay editable (readonly off) so values persist.
-	 *
-	 * @return void
-	 */
-	private function render_toggle_assets(): void {
-		?>
-		<style>
-			.profitpress-zone-costs.is-disabled { opacity: 0.45; }
-		</style>
-		<script>
-			( function () {
-				var group = document.getElementById( 'profitpress-shipping-model' );
-				var card  = document.getElementById( 'profitpress-zone-costs' );
-				if ( ! group || ! card ) {
-					return;
-				}
-				function sync() {
-					var checked = group.querySelector( 'input[type="radio"]:checked' );
-					var on = checked && 'carrier_estimate' === checked.value;
-					card.classList.toggle( 'is-disabled', ! on );
-				}
-				group.addEventListener( 'change', sync );
-				sync();
-			}() );
-		</script>
-		<?php
-	}
-
-	/**
 	 * Resolve the stored model, falling back to the default.
 	 *
 	 * @param array<string, mixed> $shipping The shipping settings slice.
@@ -179,9 +147,9 @@ final class ShippingCostsTab implements TabInterface {
 	 */
 	private function model_options(): array {
 		return array(
-			'carrier_estimate' => __( 'I pay carriers separately — estimate per zone below', 'profitpress' ),
-			'customer_paid'    => __( 'My shipping charges equal my shipping costs — use what the customer paid', 'profitpress' ),
-			'included'         => __( 'Shipping is included in product cost or not applicable — use zero', 'profitpress' ),
+			'carrier_estimate' => __( 'I pay carriers separately — estimate per zone below', 'profitly' ),
+			'customer_paid'    => __( 'My shipping charges equal my shipping costs — use what the customer paid', 'profitly' ),
+			'included'         => __( 'Shipping is included in product cost or not applicable — use zero', 'profitly' ),
 		);
 	}
 
@@ -200,7 +168,7 @@ final class ShippingCostsTab implements TabInterface {
 			}
 		}
 
-		$zones[0] = __( 'Rest of the World', 'profitpress' );
+		$zones[0] = __( 'Rest of the World', 'profitly' );
 
 		ksort( $zones );
 

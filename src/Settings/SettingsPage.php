@@ -1,16 +1,16 @@
 <?php
 /**
- * ProfitPress settings screen renderer.
+ * Profitly settings screen renderer.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Settings;
+namespace Profitly\Settings;
 
-use ProfitPress\Admin\Menu;
-use ProfitPress\Constants;
+use Profitly\Admin\Menu;
+use Profitly\Constants;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -32,7 +32,7 @@ final class SettingsPage {
 	 */
 	public static function render(): void {
 		if ( ! current_user_can( Constants::CAP_MANAGE ) ) {
-			wp_die( esc_html__( 'You do not have permission to change ProfitPress settings.', 'profitpress' ) );
+			wp_die( esc_html__( 'You do not have permission to change Profitly settings.', 'profitly' ) );
 		}
 
 		$tabs = SettingsRegistry::get_tabs();
@@ -52,8 +52,8 @@ final class SettingsPage {
 
 		$active_tab = $tabs[ $current ];
 
-		echo '<div class="wrap profitpress-settings">';
-		echo '<h1>' . esc_html__( 'ProfitPress Settings', 'profitpress' ) . '</h1>';
+		echo '<div class="wrap profitly-settings">';
+		echo '<h1>' . esc_html__( 'Profitly Settings', 'profitly' ) . '</h1>';
 
 		settings_errors( Constants::OPTION );
 
@@ -74,7 +74,7 @@ final class SettingsPage {
 		);
 		printf( '<input type="hidden" name="action" value="%s" />', esc_attr( SettingsHandler::ACTION ) );
 		printf( '<input type="hidden" name="tab" value="%s" />', esc_attr( $current ) );
-		wp_nonce_field( 'profitpress_save_settings', '_profitpress_nonce' );
+		wp_nonce_field( 'profitly_save_settings', '_profitly_nonce' );
 
 		$active_tab->render( SettingsRegistry::get_settings() );
 

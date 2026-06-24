@@ -2,7 +2,7 @@
 /**
  * PHPUnit bootstrap.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );

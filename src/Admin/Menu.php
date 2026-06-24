@@ -1,24 +1,24 @@
 <?php
 /**
- * Top-level ProfitPress admin menu.
+ * Top-level Profitly admin menu.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Admin;
+namespace Profitly\Admin;
 
-use ProfitPress\Constants;
-use ProfitPress\Reports\ReportsPage;
-use ProfitPress\Settings\SettingsPage;
+use Profitly\Constants;
+use Profitly\Reports\ReportsPage;
+use Profitly\Settings\SettingsPage;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * The single source of truth for ProfitPress admin navigation.
+ * The single source of truth for Profitly admin navigation.
  *
- * It registers the top-level "ProfitPress" menu and its Reports and Settings
+ * It registers the top-level "Profitly" menu and its Reports and Settings
  * sub-pages, and exposes the canonical URL helpers every other component uses to
  * link to those pages. No other code should construct these URLs by hand.
  */
@@ -27,12 +27,12 @@ final class Menu {
 	/**
 	 * Menu slug of the top-level page (also the Reports sub-page slug).
 	 */
-	public const SLUG = 'profitpress';
+	public const SLUG = 'profitly';
 
 	/**
 	 * Menu slug of the Settings sub-page.
 	 */
-	public const SETTINGS_SLUG = 'profitpress-settings';
+	public const SETTINGS_SLUG = 'profitly-settings';
 
 	/**
 	 * Register WordPress hooks for this component.
@@ -50,8 +50,8 @@ final class Menu {
 	 */
 	public function register_menu(): void {
 		add_menu_page(
-			__( 'ProfitPress', 'profitpress' ),
-			__( 'ProfitPress', 'profitpress' ),
+			__( 'Profitly', 'profitly' ),
+			__( 'Profitly', 'profitly' ),
 			Constants::CAP_VIEW_REPORTS,
 			self::SLUG,
 			static function (): void {
@@ -61,16 +61,16 @@ final class Menu {
 			56
 		);
 
-		// Rename the auto-created first sub-item from "ProfitPress" to "Reports"
+		// Rename the auto-created first sub-item from "Profitly" to "Reports"
 		// by re-registering it against the same slug as the parent. The callback
 		// is intentionally empty: this submenu shares the parent's page hook
-		// (toplevel_page_profitpress), and the parent's callback already renders
+		// (toplevel_page_profitly), and the parent's callback already renders
 		// it. Passing a second (distinct) callback here would hook the same page
 		// twice and render the report — stats and all — twice.
 		add_submenu_page(
 			self::SLUG,
-			__( 'Reports', 'profitpress' ),
-			__( 'Reports', 'profitpress' ),
+			__( 'Reports', 'profitly' ),
+			__( 'Reports', 'profitly' ),
 			Constants::CAP_VIEW_REPORTS,
 			self::SLUG,
 			''
@@ -78,8 +78,8 @@ final class Menu {
 
 		add_submenu_page(
 			self::SLUG,
-			__( 'Settings', 'profitpress' ),
-			__( 'Settings', 'profitpress' ),
+			__( 'Settings', 'profitly' ),
+			__( 'Settings', 'profitly' ),
 			Constants::CAP_MANAGE,
 			self::SETTINGS_SLUG,
 			array( SettingsPage::class, 'render' )

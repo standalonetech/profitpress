@@ -23,8 +23,9 @@ Thumbs.db
 # This file itself
 /.distignore
 
-# Dependency manifests (unused by end users)
-/composer.json
+# Dependency manifests.
+# composer.json MUST ship: WordPress.org plugin review requires it in the
+# package root (it documents the PSR-4 autoload map and PHP requirement).
 /composer.lock
 /package.json
 /package-lock.json

@@ -2,12 +2,12 @@
 /**
  * Pure cost-of-goods math.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\COGS;
+namespace Profitly\COGS;
 
 defined( 'ABSPATH' ) || exit;
 

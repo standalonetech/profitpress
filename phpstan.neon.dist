@@ -3,7 +3,7 @@ parameters:
 	paths:
 		- src/
 	bootstrapFiles:
-		- profitpress.php
+		- profitly.php
 	scanFiles:
 		- vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
 	# WooCommerce stubs declare many returns as non-nullable, but at real runtime

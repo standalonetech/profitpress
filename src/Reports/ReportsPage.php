@@ -1,59 +1,30 @@
 <?php
 /**
- * ProfitPress reports admin page.
+ * Profitly reports admin page.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Reports;
+namespace Profitly\Reports;
 
-use ProfitPress\Admin\Menu;
-use ProfitPress\COGS\COGSCalculator;
-use ProfitPress\Constants;
+use Profitly\COGS\COGSCalculator;
+use Profitly\Constants;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Renders the "Reports" page under the top-level ProfitPress menu.
+ * Renders the "Reports" page under the top-level Profitly menu.
  *
- * Its single responsibility is the report screen's orchestration: it enqueues
- * the report stylesheet, resolves the requested date range, pulls (cached)
- * aggregations and product rankings, and hands them to the plain-PHP view
+ * Its single responsibility is the report screen's orchestration: it resolves
+ * the requested date range, pulls (cached) aggregations and product rankings,
+ * and hands them to the plain-PHP view
  * templates. Menu registration lives in {@see Menu}, which calls {@see render()}.
  * All heavy computation lives in {@see ProfitAggregator} and
  * {@see ProductPerformance}; results are cached via {@see ReportCache}.
  */
 final class ReportsPage {
-
-	/**
-	 * Register WordPress hooks for this component.
-	 *
-	 * @return void
-	 */
-	public function register_hooks(): void {
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
-	}
-
-	/**
-	 * Enqueue the report stylesheet on the reports page only.
-	 *
-	 * @param string $hook_suffix Current admin page hook suffix.
-	 * @return void
-	 */
-	public function enqueue_assets( string $hook_suffix ): void {
-		// The Reports page is the top-level menu page (slug === parent slug).
-		if ( 'toplevel_page_' . Menu::SLUG !== $hook_suffix ) {
-			return;
-		}
-
-		$file    = PROFITPRESS_PATH . 'assets/css/reports.css';
-		$mtime   = is_readable( $file ) ? (string) filemtime( $file ) : '';
-		$version = '' !== $mtime ? PROFITPRESS_VERSION . '.' . $mtime : PROFITPRESS_VERSION;
-
-		wp_enqueue_style( 'profitpress-reports', PROFITPRESS_URL . 'assets/css/reports.css', array( 'woocommerce_admin_styles' ), $version );
-	}
 
 	/**
 	 * Render the reports page.
@@ -62,7 +33,7 @@ final class ReportsPage {
 	 */
 	public function render(): void {
 		if ( ! current_user_can( Constants::CAP_VIEW_REPORTS ) ) {
-			wp_die( esc_html__( 'You do not have permission to view ProfitPress reports.', 'profitpress' ) );
+			wp_die( esc_html__( 'You do not have permission to view Profitly reports.', 'profitly' ) );
 		}
 
 		$range    = DateRangeFilter::get_current_range();
@@ -72,7 +43,7 @@ final class ReportsPage {
 		$previous_aggregation = self::cached_aggregation( $range['key'], $range['previous_start'], $range['previous_end'], 'prev' );
 
 		/** This filter is documented in src/Reports/ReportsPage.php */
-		$aggregation = apply_filters( 'profitpress_report_aggregation_data', $aggregation, $range );
+		$aggregation = apply_filters( 'profitly_report_aggregation_data', $aggregation, $range );
 
 		$has_data = $aggregation['order_count'] > 0;
 
@@ -152,28 +123,28 @@ final class ReportsPage {
 		$cards = array(
 			array(
 				'key'      => 'revenue',
-				'label'    => __( 'Total Revenue', 'profitpress' ),
+				'label'    => __( 'Total Revenue', 'profitly' ),
 				'value'    => wc_price( (float) $current['revenue'], array( 'currency' => $currency ) ),
 				'delta'    => self::calculate_delta( (string) $current['revenue'], (string) $previous['revenue'] ),
 				'is_money' => true,
 			),
 			array(
 				'key'      => 'net_profit',
-				'label'    => __( 'Total Net Profit', 'profitpress' ),
+				'label'    => __( 'Total Net Profit', 'profitly' ),
 				'value'    => wc_price( (float) $current['net_profit'], array( 'currency' => $currency ) ),
 				'delta'    => self::calculate_delta( (string) $current['net_profit'], (string) $previous['net_profit'] ),
 				'is_money' => true,
 			),
 			array(
 				'key'      => 'order_count',
-				'label'    => __( 'Total Orders', 'profitpress' ),
+				'label'    => __( 'Total Orders', 'profitly' ),
 				'value'    => number_format_i18n( (int) $current['order_count'] ),
 				'delta'    => self::calculate_delta( (string) (int) $current['order_count'], (string) (int) $previous['order_count'] ),
 				'is_money' => false,
 			),
 			array(
 				'key'      => 'avg_margin',
-				'label'    => __( 'Average Margin %', 'profitpress' ),
+				'label'    => __( 'Average Margin %', 'profitly' ),
 				'value'    => esc_html( $current['avg_margin'] ) . '%',
 				'delta'    => self::calculate_delta( (string) $current['avg_margin'], (string) $previous['avg_margin'] ),
 				'is_money' => false,
@@ -194,7 +165,7 @@ final class ReportsPage {
 		 * @param array<string, mixed>             $current  Current aggregation.
 		 * @param array<string, mixed>             $previous Previous aggregation.
 		 */
-		return apply_filters( 'profitpress_report_summary_cards', $cards, $current, $previous );
+		return apply_filters( 'profitly_report_summary_cards', $cards, $current, $previous );
 	}
 
 	/**
@@ -246,17 +217,17 @@ final class ReportsPage {
 	 */
 	public static function render_delta( array $delta, string $previous_label ): string {
 		$class_map = array(
-			'up'      => 'profitpress-delta-up',
-			'down'    => 'profitpress-delta-down',
-			'neutral' => 'profitpress-delta-neutral',
+			'up'      => 'profitly-delta-up',
+			'down'    => 'profitly-delta-down',
+			'neutral' => 'profitly-delta-neutral',
 		);
 
-		$class = $class_map[ $delta['direction'] ] ?? 'profitpress-delta-neutral';
+		$class = $class_map[ $delta['direction'] ] ?? 'profitly-delta-neutral';
 
 		if ( ! $delta['has_previous'] ) {
 			$text = 'up' === $delta['direction']
-				? __( 'New', 'profitpress' )
-				: __( 'No prior data', 'profitpress' );
+				? __( 'New', 'profitly' )
+				: __( 'No prior data', 'profitly' );
 		} else {
 			$arrow = 'up' === $delta['direction'] ? '▲' : ( 'down' === $delta['direction'] ? '▼' : '' );
 			$sign  = (float) $delta['percent'] > 0 ? '+' : '';
@@ -264,7 +235,7 @@ final class ReportsPage {
 		}
 
 		return sprintf(
-			'<span class="profitpress-delta %1$s">%2$s</span> <span class="profitpress-delta-label">%3$s</span>',
+			'<span class="profitly-delta %1$s">%2$s</span> <span class="profitly-delta-label">%3$s</span>',
 			esc_attr( $class ),
 			esc_html( $text ),
 			esc_html( $previous_label )

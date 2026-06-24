@@ -2,12 +2,12 @@
 /**
  * Gateway Fees settings tab.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Settings\Tabs;
+namespace Profitly\Settings\Tabs;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -36,7 +36,7 @@ final class GatewayFeesTab implements TabInterface {
 	 * {@inheritDoc}
 	 */
 	public function get_label(): string {
-		return __( 'Gateway Fees', 'profitpress' );
+		return __( 'Gateway Fees', 'profitly' );
 	}
 
 	/**
@@ -50,10 +50,10 @@ final class GatewayFeesTab implements TabInterface {
 		$gateways = $this->get_enabled_gateways();
 		$symbol   = get_woocommerce_currency_symbol();
 
-		echo '<p>' . esc_html__( 'Fees you enter here will be deducted from revenue when calculating profit. Changing fees affects new orders only — historical orders snapshot their fee at order creation time.', 'profitpress' ) . '</p>';
+		echo '<p>' . esc_html__( 'Fees you enter here will be deducted from revenue when calculating profit. Changing fees affects new orders only — historical orders snapshot their fee at order creation time.', 'profitly' ) . '</p>';
 
 		if ( empty( $gateways ) ) {
-			echo '<p class="description">' . esc_html__( 'No payment gateways are enabled. Configure payment methods in WooCommerce → Settings → Payments first.', 'profitpress' ) . '</p>';
+			echo '<p class="description">' . esc_html__( 'No payment gateways are enabled. Configure payment methods in WooCommerce → Settings → Payments first.', 'profitly' ) . '</p>';
 			return;
 		}
 
@@ -70,23 +70,23 @@ final class GatewayFeesTab implements TabInterface {
 			echo '<td>';
 
 			printf(
-				'<label>%1$s <input type="number" class="small-text" step="0.001" min="0" max="100" name="profitpress_settings[gateway_fees][%2$s][percent]" value="%3$s" /> %%</label> &nbsp; ',
-				esc_html__( 'Percentage', 'profitpress' ),
+				'<label>%1$s <input type="number" class="small-text" step="0.001" min="0" max="100" name="profitly_settings[gateway_fees][%2$s][percent]" value="%3$s" /> %%</label> &nbsp; ',
+				esc_html__( 'Percentage', 'profitly' ),
 				esc_attr( $id ),
 				esc_attr( $percent )
 			);
 
 			printf(
-				'<label>%1$s %2$s <input type="number" class="small-text" step="0.01" min="0" name="profitpress_settings[gateway_fees][%3$s][fixed]" value="%4$s" /></label> &nbsp; ',
-				esc_html__( 'Fixed', 'profitpress' ),
+				'<label>%1$s %2$s <input type="number" class="small-text" step="0.01" min="0" name="profitly_settings[gateway_fees][%3$s][fixed]" value="%4$s" /></label> &nbsp; ',
+				esc_html__( 'Fixed', 'profitly' ),
 				esc_html( $symbol ),
 				esc_attr( $id ),
 				esc_attr( $fixed )
 			);
 
 			printf(
-				'<label>%1$s <select name="profitpress_settings[gateway_fees][%2$s][basis]">',
-				esc_html__( 'on', 'profitpress' ),
+				'<label>%1$s <select name="profitly_settings[gateway_fees][%2$s][basis]">',
+				esc_html__( 'on', 'profitly' ),
 				esc_attr( $id )
 			);
 			foreach ( $this->basis_options() as $value => $label ) {
@@ -116,7 +116,7 @@ final class GatewayFeesTab implements TabInterface {
 	public function sanitize( array $input, array $existing ): array {
 		unset( $existing );
 
-		$raw       = $input['profitpress_settings']['gateway_fees'] ?? array();
+		$raw       = $input['profitly_settings']['gateway_fees'] ?? array();
 		$sanitized = array();
 
 		if ( is_array( $raw ) ) {
@@ -166,9 +166,9 @@ final class GatewayFeesTab implements TabInterface {
 	 */
 	private function basis_options(): array {
 		return array(
-			'total'             => __( 'Order total (incl. tax & shipping)', 'profitpress' ),
-			'subtotal_shipping' => __( 'Subtotal + shipping (excl. tax)', 'profitpress' ),
-			'subtotal'          => __( 'Product subtotal only', 'profitpress' ),
+			'total'             => __( 'Order total (incl. tax & shipping)', 'profitly' ),
+			'subtotal_shipping' => __( 'Subtotal + shipping (excl. tax)', 'profitly' ),
+			'subtotal'          => __( 'Product subtotal only', 'profitly' ),
 		);
 	}
 

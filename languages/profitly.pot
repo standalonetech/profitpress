@@ -2,46 +2,50 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: ProfitPress — Real Profit Analytics for WooCommerce 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/profitpress\n"
+"Project-Id-Version: Profitly — Profit Analytics for WooCommerce 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/profitly\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-23T02:52:39+00:00\n"
+"POT-Creation-Date: 2026-06-23T03:09:41+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
-"X-Domain: profitpress\n"
+"X-Domain: profitly\n"
 
 #. Plugin Name of the plugin
-#: profitpress.php
-msgid "ProfitPress — Real Profit Analytics for WooCommerce"
+#: profitly.php
+msgid "Profitly — Profit Analytics for WooCommerce"
 msgstr ""
 
 #. Plugin URI of the plugin
-#. Author URI of the plugin
-#: profitpress.php
+#: profitly.php
 msgid "https://standalonetech.com/"
 msgstr ""
 
 #. Description of the plugin
-#: profitpress.php
+#: profitly.php
 msgid "Track the real profit of your WooCommerce store by capturing cost of goods (COGS) and snapshotting it onto historical orders."
 msgstr ""
 
 #. Author of the plugin
-#: profitpress.php
+#: profitly.php
 msgid "StandaloneTech"
 msgstr ""
 
-#: profitpress.php:41
-msgid "ProfitPress requires WooCommerce to be installed and active."
+#. Author URI of the plugin
+#: profitly.php
+msgid "https://github.com/standalonetech/"
+msgstr ""
+
+#: profitly.php:41
+msgid "Profitly requires WooCommerce to be installed and active."
 msgstr ""
 
 #: src/Admin/Menu.php:53
 #: src/Admin/Menu.php:54
-msgid "ProfitPress"
+msgid "Profitly"
 msgstr ""
 
 #: src/Admin/Menu.php:72
@@ -139,7 +143,7 @@ msgid "Avg:"
 msgstr ""
 
 #: src/Dashboard/DashboardWidget.php:69
-msgid "ProfitPress: Last 7 Days"
+msgid "Profitly: Last 7 Days"
 msgstr ""
 
 #: src/Dashboard/Views/widget.php:22
@@ -176,7 +180,7 @@ msgid "View full report →"
 msgstr ""
 
 #: src/Export/CsvExporter.php:62
-msgid "You do not have permission to export ProfitPress reports."
+msgid "You do not have permission to export Profitly reports."
 msgstr ""
 
 #: src/Export/CsvExporter.php:142
@@ -218,7 +222,7 @@ msgid "Refund Loss"
 msgstr ""
 
 #: src/Fees/GatewayFeeCalculator.php:134
-msgid "ProfitPress: gateway fee could not be calculated because no fee snapshot was recorded for this order (it predates the plugin or its settings)."
+msgid "Profitly: gateway fee could not be calculated because no fee snapshot was recorded for this order (it predates the plugin or its settings)."
 msgstr ""
 
 #: src/Reports/DateRangeFilter.php:141
@@ -242,7 +246,7 @@ msgid "vs previous 30 days"
 msgstr ""
 
 #: src/Reports/ReportsPage.php:65
-msgid "You do not have permission to view ProfitPress reports."
+msgid "You do not have permission to view Profitly reports."
 msgstr ""
 
 #: src/Reports/ReportsPage.php:155
@@ -288,7 +292,7 @@ msgid "Units Sold"
 msgstr ""
 
 #: src/Reports/Views/reports-page.php:29
-msgid "ProfitPress Reports"
+msgid "Profitly Reports"
 msgstr ""
 
 #: src/Reports/Views/reports-page.php:31
@@ -317,7 +321,7 @@ msgstr ""
 
 #: src/Settings/SettingsHandler.php:54
 #: src/Settings/SettingsPage.php:35
-msgid "You do not have permission to change ProfitPress settings."
+msgid "You do not have permission to change Profitly settings."
 msgstr ""
 
 #: src/Settings/SettingsHandler.php:83
@@ -325,7 +329,7 @@ msgid "Settings saved."
 msgstr ""
 
 #: src/Settings/SettingsPage.php:56
-msgid "ProfitPress Settings"
+msgid "Profitly Settings"
 msgstr ""
 
 #: src/Settings/Tabs/GatewayFeesTab.php:39
@@ -373,11 +377,11 @@ msgid "Data retention"
 msgstr ""
 
 #: src/Settings/Tabs/GeneralTab.php:51
-msgid "Delete all ProfitPress data when this plugin is uninstalled"
+msgid "Delete all Profitly data when this plugin is uninstalled"
 msgstr ""
 
 #: src/Settings/Tabs/GeneralTab.php:53
-msgid "When enabled, uninstalling ProfitPress will permanently remove all COGS data, settings, and order profit snapshots. This cannot be undone."
+msgid "When enabled, uninstalling Profitly will permanently remove all COGS data, settings, and order profit snapshots. This cannot be undone."
 msgstr ""
 
 #: src/Settings/Tabs/ShippingCostsTab.php:40
@@ -385,7 +389,7 @@ msgid "Shipping Costs"
 msgstr ""
 
 #: src/Settings/Tabs/ShippingCostsTab.php:55
-msgid "Choose how ProfitPress accounts for shipping costs when calculating profit. Used as a fallback when no per-order shipping cost is set."
+msgid "Choose how Profitly accounts for shipping costs when calculating profit. Used as a fallback when no per-order shipping cost is set."
 msgstr ""
 
 #: src/Settings/Tabs/ShippingCostsTab.php:59

@@ -4,15 +4,15 @@ argument-hint: "(no args)"
 allowed-tools: Bash, Read
 ---
 
-You are packaging the **ProfitPress** plugin for upload to the WordPress.org plugin
-repository. Produce two things: a refreshed `languages/profitpress.pot` and a
-distributable zip at `dist/profitpress.zip` that contains a single top-level
-`profitpress/` directory.
+You are packaging the **Profitly** plugin for upload to the WordPress.org plugin
+repository. Produce two things: a refreshed `languages/profitly.pot` and a
+distributable zip at `dist/profitly.zip` that contains a single top-level
+`profitly/` directory.
 
 Use `dist/` (not `build/`) for all packaging output — `build/` is reserved for a
 future JS/React build step and must not collide with the release artifact.
 
-Work from the plugin root (`/var/www/html/terawallet/wp-content/plugins/profitpress`).
+Work from the plugin root (`/var/www/html/terawallet/wp-content/plugins/profitly`).
 Run the steps in order. **Stop and report** if any step fails — never ship a half-built
 zip.
 
@@ -21,12 +21,12 @@ zip.
 Read the version from each of these and confirm they match. If any differ, warn the
 user clearly and ask whether to continue before building:
 
-- `profitpress.php` — the `Version:` header **and** the `PROFITPRESS_VERSION` constant
+- `profitly.php` — the `Version:` header **and** the `PROFITLY_VERSION` constant
 - `readme.txt` — `Stable tag:`
 - `src/Settings/SettingsRegistry.php` — the `VERSION` constant
 
 ```bash
-grep -E "Version:|PROFITPRESS_VERSION" profitpress.php
+grep -E "Version:|PROFITLY_VERSION" profitly.php
 grep -E "Stable tag:" readme.txt
 grep -E "const VERSION" src/Settings/SettingsRegistry.php
 ```
@@ -49,33 +49,37 @@ fixes a stale `Project-Id-Version`. Exclude non-shipping code so vendor/test str
 never leak into the template:
 
 ```bash
-wp i18n make-pot . languages/profitpress.pot \
-  --domain=profitpress \
-  --exclude=vendor,tests,build,node_modules
+wp i18n make-pot . languages/profitly.pot \
+  --domain=profitly \
+  --exclude=vendor,tests,build,dist,node_modules
 ```
+
+> `dist` MUST be in the exclude list: it holds the staged copy from a previous run,
+> and without excluding it `make-pot` scans that duplicate plugin tree and pollutes
+> the template with `dist/profitly/...` file references.
 
 ## 4. Stage the files honoring .distignore
 
-Mirror the working tree into `dist/profitpress/`, applying the same exclusions
+Mirror the working tree into `dist/profitly/`, applying the same exclusions
 WordPress.org tooling uses. `rsync` reads `.distignore` directly; `/dist` and `/.git`
 are already listed there, so the staging dir never copies itself or the repo metadata:
 
 ```bash
-rm -rf dist/profitpress dist/profitpress.zip
-mkdir -p dist/profitpress
+rm -rf dist/profitly dist/profitly.zip
+mkdir -p dist/profitly
 rsync -a --delete \
   --exclude-from='.distignore' \
   --exclude='.git/' \
-  ./ dist/profitpress/
+  ./ dist/profitly/
 ```
 
 ## 5. Create the zip
 
-The archive must wrap everything in a top-level `profitpress/` folder (WordPress
+The archive must wrap everything in a top-level `profitly/` folder (WordPress
 installs by directory name):
 
 ```bash
-( cd dist && zip -rq profitpress.zip profitpress -x '*.DS_Store' )
+( cd dist && zip -rq profitly.zip profitly -x '*.DS_Store' )
 ```
 
 ## 6. Verify the artifact (required — do not skip)
@@ -83,14 +87,14 @@ installs by directory name):
 Inspect the zip contents and assert the package is correct:
 
 ```bash
-unzip -l dist/profitpress.zip
+unzip -l dist/profitly.zip
 ```
 
 Confirm ALL of the following, and report each as a pass/fail line:
 
-- ✅ `profitpress/profitpress.php` is present
-- ✅ `profitpress/vendor/autoload.php` is present
-- ✅ `profitpress/languages/profitpress.pot` is present
+- ✅ `profitly/profitly.php` is present
+- ✅ `profitly/vendor/autoload.php` is present
+- ✅ `profitly/languages/profitly.pot` is present
 - ❌ NONE of these leaked in: `tests/`, `phpunit.xml.dist`, `phpcs.xml.dist`,
   `phpstan.neon.dist`, `composer.json`, `composer.lock`, `.git/`, `.github/`,
   `CLAUDE.md`, `.claude/`, `RELEASING.md`, `README.md` (GitHub-only — WordPress.org
@@ -113,10 +117,10 @@ composer install
 
 Tell the user:
 - The plugin version that was packaged
-- The absolute path to `dist/profitpress.zip` and its size
+- The absolute path to `dist/profitly.zip` and its size
 - That the `.pot` was regenerated (and note any new/removed strings if obvious)
 - The verification results
-- That they can now upload `dist/profitpress.zip` to WordPress.org
+- That they can now upload `dist/profitly.zip` to WordPress.org
 
 Do not commit anything — `dist/` and `composer.lock` are gitignored, and the updated
-`languages/profitpress.pot` is the user's to review and commit.
+`languages/profitly.pot` is the user's to review and commit.

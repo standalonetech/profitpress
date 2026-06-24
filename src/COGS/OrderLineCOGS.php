@@ -2,12 +2,12 @@
 /**
  * Order line-item cost-of-goods snapshotting.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\COGS;
+namespace Profitly\COGS;
 
 use WC_Abstract_Order;
 use WC_Order;
@@ -32,12 +32,12 @@ final class OrderLineCOGS {
 	/**
 	 * Meta key holding the snapshotted per-unit cost.
 	 */
-	public const META_UNIT = '_profitpress_line_cogs';
+	public const META_UNIT = '_profitly_line_cogs';
 
 	/**
 	 * Meta key holding the snapshotted line total cost (unit × quantity).
 	 */
-	public const META_TOTAL = '_profitpress_line_cogs_total';
+	public const META_TOTAL = '_profitly_line_cogs_total';
 
 	/**
 	 * Register WordPress/WooCommerce hooks for this component.

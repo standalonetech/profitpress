@@ -2,17 +2,17 @@
 /**
  * Per-product profit performance queries.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Reports;
+namespace Profitly\Reports;
 
 use DateTimeImmutable;
 use DateTimeZone;
-use ProfitPress\COGS\COGSCalculator;
-use ProfitPress\COGS\OrderLineCOGS;
+use Profitly\COGS\COGSCalculator;
+use Profitly\COGS\OrderLineCOGS;
 
 defined( 'ABSPATH' ) || exit;
 

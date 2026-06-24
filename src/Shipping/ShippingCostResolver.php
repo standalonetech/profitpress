@@ -2,14 +2,14 @@
 /**
  * Merchant-side shipping cost resolution for an order.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Shipping;
+namespace Profitly\Shipping;
 
-use ProfitPress\Settings\SettingsRegistry;
+use Profitly\Settings\SettingsRegistry;
 use WC_Order;
 
 defined( 'ABSPATH' ) || exit;
@@ -27,17 +27,17 @@ final class ShippingCostResolver {
 	/**
 	 * Order meta key: zone-based estimate captured at order creation.
 	 */
-	public const META_SNAPSHOT = '_profitpress_shipping_cost';
+	public const META_SNAPSHOT = '_profitly_shipping_cost';
 
 	/**
 	 * Order meta key: manual per-order override set by an admin.
 	 */
-	public const META_OVERRIDE = '_profitpress_shipping_cost_override';
+	public const META_OVERRIDE = '_profitly_shipping_cost_override';
 
 	/**
 	 * Order meta key: shipping cost model captured at order creation.
 	 */
-	public const META_SNAPSHOT_MODEL = '_profitpress_shipping_cost_model';
+	public const META_SNAPSHOT_MODEL = '_profitly_shipping_cost_model';
 
 	/**
 	 * Resolve the shipping cost for an order.

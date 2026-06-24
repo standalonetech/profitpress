@@ -2,16 +2,16 @@
 /**
  * Order-creation snapshot of fee and shipping settings.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Profit;
+namespace Profitly\Profit;
 
-use ProfitPress\Fees\GatewayFeeCalculator;
-use ProfitPress\Settings\SettingsRegistry;
-use ProfitPress\Shipping\ShippingCostResolver;
+use Profitly\Fees\GatewayFeeCalculator;
+use Profitly\Settings\SettingsRegistry;
+use Profitly\Shipping\ShippingCostResolver;
 use WC_Order;
 
 defined( 'ABSPATH' ) || exit;
@@ -31,7 +31,7 @@ final class OrderSnapshot {
 	/**
 	 * Order meta key: id of the gateway used for the order.
 	 */
-	public const META_GATEWAY_ID = '_profitpress_gateway_id';
+	public const META_GATEWAY_ID = '_profitly_gateway_id';
 
 	/**
 	 * Register WordPress/WooCommerce hooks for this component.

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-ProfitPress is a WooCommerce extension that tracks the *real* profit of a store by
+Profitly is a WooCommerce extension that tracks the *real* profit of a store by
 capturing cost of goods (COGS), gateway fees, and shipping costs and **snapshotting**
 them onto historical orders. Requires WordPress 6.4+, PHP 7.4+, WooCommerce 8.2+.
 
@@ -20,7 +20,7 @@ composer analyze      # phpstan analyse — level 6, src/ only (config: phpstan.
 composer test         # phpunit
 ```
 
-Tests live in `tests/` (PSR-4 maps `ProfitPress\Tests\` → `tests/`), configured by
+Tests live in `tests/` (PSR-4 maps `Profitly\Tests\` → `tests/`), configured by
 `phpunit.xml.dist` with `tests/bootstrap.php`. The bootstrap **defines `ABSPATH` before
 loading the autoloader** — every `src/` class guards itself with `defined( 'ABSPATH' ) || exit;`,
 so without this the file under test would terminate the run. The suite currently covers the
@@ -28,7 +28,7 @@ pure, WordPress-free units (`tests/Unit/`, starting with `COGSCalculator`); WP/W
 classes would need a WP test harness (e.g. wp-phpunit / Brain Monkey) that is not yet set up.
 `composer test` runs PHPUnit; PHPStan scans `src/` only with WooCommerce stubs. After any code
 change, run `composer lint && composer analyze && composer test` before considering the work done;
-the WordPress Coding Standards are strict (escaping, i18n text domain `profitpress`, prefixing) and
+the WordPress Coding Standards are strict (escaping, i18n text domain `profitly`, prefixing) and
 enforced for WordPress.org publication. `phpcs.xml.dist` relaxes a few sniffs under `/tests/*`
 (StudlyCase filenames, mandatory docblocks, `WP_Filesystem`) since those are runtime-code rules
 that don't fit test infrastructure.
@@ -38,7 +38,7 @@ There is no JS/CSS build step — `assets/css` and `assets/js` ship as-is.
 ## Architecture
 
 ### Bootstrap
-`profitpress.php` (the WP plugin header file) defines `PROFITPRESS_*` constants, loads
+`profitly.php` (the WP plugin header file) defines `PROFITLY_*` constants, loads
 the Composer autoloader, and on `plugins_loaded` (priority 20) bails with an admin
 notice if WooCommerce is absent, else calls `Plugin::instance()`. `src/Plugin.php` is a
 singleton whose **only** job is bootstrapping: it instantiates each feature class and
@@ -59,7 +59,7 @@ are frozen onto orders **at creation time** and read back later:
 
 All order access uses the WooCommerce CRUD API (`$order->get_meta()` /
 `update_meta_data()`), never direct post meta — this is what makes the plugin **HPOS-safe**
-(`Compatibility/HPOS` declares compatibility). Meta keys are prefixed `_profitpress_*` and
+(`Compatibility/HPOS` declares compatibility). Meta keys are prefixed `_profitly_*` and
 defined as class constants (e.g. `OrderLineCOGS::META_UNIT`, `ShippingCostResolver::META_SNAPSHOT`).
 
 ### Money math
@@ -72,7 +72,7 @@ refund_loss, net_profit, margin). Note its refund model: the full gateway fee is
 charged exactly once.
 
 ### Settings — one option, one registry
-There is exactly **one** stored option, `profitpress_settings` (`Constants::OPTION`), holding
+There is exactly **one** stored option, `profitly_settings` (`Constants::OPTION`), holding
 all config. `Settings/SettingsRegistry` is its single source of truth: it owns the default
 shape (`get_defaults()`), registers the option, and exposes **typed read accessors**
 (`get_gateway_fee()`, `get_shipping_cost()`, `get_shipping_cost_model()`). Every consumer
@@ -84,7 +84,7 @@ submission (nonce + capability + sanitize); `Settings/SettingsPage` is UI-only c
 
 ### Admin menu & routing
 `Admin/Menu` is the single source of truth for navigation: it registers the top-level
-"ProfitPress" menu (Reports as the default page, Settings as a sub-page) and exposes the
+"Profitly" menu (Reports as the default page, Settings as a sub-page) and exposes the
 canonical URL helpers `Menu::reports_url()` / `Menu::settings_url($tab)`. Never hand-build
 these admin URLs elsewhere. (The Reports submenu is deliberately re-registered against the
 parent slug with an *empty* callback to avoid rendering the report twice.)
@@ -104,7 +104,7 @@ Two caps gate everything (`Constants`): `view_woocommerce_reports` for read-only
 
 | Area | Location |
 |------|----------|
-| Bootstrap | `profitpress.php`, `src/Plugin.php`, `src/Constants.php`, `src/Activator.php`, `src/Deactivator.php` |
+| Bootstrap | `profitly.php`, `src/Plugin.php`, `src/Constants.php`, `src/Activator.php`, `src/Deactivator.php` |
 | COGS data layer + money math | `src/COGS/` |
 | Profit snapshotting & calculation | `src/Profit/` |
 | Gateway fees | `src/Fees/` |
@@ -122,6 +122,6 @@ WordPress.org ships via SVN and installs the plugin **without** running Composer
 shipped package **must include `vendor/`** (the autoloader) but exclude dev tooling. `vendor/`
 is git-ignored but intentionally NOT in `.distignore`. Build with
 `composer install --no-dev --optimize-autoloader` then `wp dist-archive`. The version must be
-bumped identically in **three** places: `profitpress.php` (`Version:` header and
-`PROFITPRESS_VERSION`), `readme.txt` (`Stable tag:`), and `SettingsRegistry::VERSION`. See
+bumped identically in **three** places: `profitly.php` (`Version:` header and
+`PROFITLY_VERSION`), `readme.txt` (`Stable tag:`), and `SettingsRegistry::VERSION`. See
 `RELEASING.md` for the full SVN procedure.

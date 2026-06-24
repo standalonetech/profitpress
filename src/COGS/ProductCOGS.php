@@ -2,12 +2,12 @@
 /**
  * Product-level cost-of-goods storage.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\COGS;
+namespace Profitly\COGS;
 
 use WC_Product;
 
@@ -18,21 +18,21 @@ defined( 'ABSPATH' ) || exit;
  * variations.
  *
  * Its single responsibility is the product-meta data layer for COGS: the meta
- * key contract (`_profitpress_cogs`, `_profitpress_supplier`), value
+ * key contract (`_profitly_cogs`, `_profitly_supplier`), value
  * sanitisation, and getters — including variation-to-parent fallback. UI
- * rendering lives in {@see \ProfitPress\Admin\ProductFields}.
+ * rendering lives in {@see \Profitly\Admin\ProductFields}.
  */
 final class ProductCOGS {
 
 	/**
 	 * Meta key holding the per-unit cost of goods (decimal string).
 	 */
-	public const META_COGS = '_profitpress_cogs';
+	public const META_COGS = '_profitly_cogs';
 
 	/**
 	 * Meta key holding the optional supplier name.
 	 */
-	public const META_SUPPLIER = '_profitpress_supplier';
+	public const META_SUPPLIER = '_profitly_supplier';
 
 	/**
 	 * Hard upper bound for a single unit cost.
@@ -44,7 +44,7 @@ final class ProductCOGS {
 	 *
 	 * This data layer is hookless by default; saving is driven by the admin
 	 * field component. The method exists to satisfy the uniform component
-	 * contract called from {@see \ProfitPress\Plugin}.
+	 * contract called from {@see \Profitly\Plugin}.
 	 *
 	 * @return void
 	 */

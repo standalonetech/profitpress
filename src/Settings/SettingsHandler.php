@@ -2,15 +2,15 @@
 /**
  * Settings form submission handler.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Settings;
+namespace Profitly\Settings;
 
-use ProfitPress\Admin\Menu;
-use ProfitPress\Constants;
+use Profitly\Admin\Menu;
+use Profitly\Constants;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -27,13 +27,13 @@ final class SettingsHandler {
 	/**
 	 * The admin-post action this handler answers to.
 	 */
-	public const ACTION = 'profitpress_save_settings';
+	public const ACTION = 'profitly_save_settings';
 
 	/**
 	 * The nonce action/name pair used by the settings form.
 	 */
-	private const NONCE_ACTION = 'profitpress_save_settings';
-	private const NONCE_NAME   = '_profitpress_nonce';
+	private const NONCE_ACTION = 'profitly_save_settings';
+	private const NONCE_NAME   = '_profitly_nonce';
 
 	/**
 	 * Register WordPress hooks for this component.
@@ -51,7 +51,7 @@ final class SettingsHandler {
 	 */
 	public function handle(): void {
 		if ( ! current_user_can( Constants::CAP_MANAGE ) ) {
-			wp_die( esc_html__( 'You do not have permission to change ProfitPress settings.', 'profitpress' ) );
+			wp_die( esc_html__( 'You do not have permission to change Profitly settings.', 'profitly' ) );
 		}
 
 		check_admin_referer( self::NONCE_ACTION, self::NONCE_NAME );
@@ -76,11 +76,11 @@ final class SettingsHandler {
 		// Each tab owns exactly one top-level key, so a shallow replace swaps only
 		// that tab's slice and leaves the other tabs' stored data intact.
 		$merged             = array_replace( $existing, $slice );
-		$merged['_version'] = PROFITPRESS_VERSION;
+		$merged['_version'] = PROFITLY_VERSION;
 
 		update_option( Constants::OPTION, $merged );
 
-		add_settings_error( Constants::OPTION, 'settings_updated', __( 'Settings saved.', 'profitpress' ), 'success' );
+		add_settings_error( Constants::OPTION, 'settings_updated', __( 'Settings saved.', 'profitly' ), 'success' );
 		set_transient( 'settings_errors', get_settings_errors(), 30 );
 
 		// `settings-updated` is what makes get_settings_errors() read the transient

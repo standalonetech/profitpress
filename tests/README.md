@@ -1,6 +1,6 @@
 # Tests
 
-PHPUnit test suite for ProfitPress.
+PHPUnit test suite for Profitly.
 
 ## Running
 
@@ -19,7 +19,7 @@ tests/
         └── COGSCalculatorTest.php
 ```
 
-Test classes are namespaced `ProfitPress\Tests\` (PSR-4 → `tests/`) and named
+Test classes are namespaced `Profitly\Tests\` (PSR-4 → `tests/`) and named
 `*Test.php`. The `unit` test suite (see `phpunit.xml.dist`) runs everything under
 `tests/Unit/`.
 

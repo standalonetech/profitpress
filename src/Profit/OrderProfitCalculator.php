@@ -2,17 +2,17 @@
 /**
  * Per-order profit engine.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Profit;
+namespace Profitly\Profit;
 
-use ProfitPress\COGS\COGSCalculator;
-use ProfitPress\COGS\OrderLineCOGS;
-use ProfitPress\Fees\GatewayFeeCalculator;
-use ProfitPress\Shipping\ShippingCostResolver;
+use Profitly\COGS\COGSCalculator;
+use Profitly\COGS\OrderLineCOGS;
+use Profitly\Fees\GatewayFeeCalculator;
+use Profitly\Shipping\ShippingCostResolver;
 use WC_Order;
 use WC_Order_Item_Product;
 

@@ -1,0 +1,5 @@
+/* Profitly settings screen styles. */
+
+.profitly-zone-costs.is-disabled {
+	opacity: 0.45;
+}

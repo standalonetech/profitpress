@@ -2,14 +2,14 @@
 /**
  * Gateway fee calculation from order snapshots.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Fees;
+namespace Profitly\Fees;
 
-use ProfitPress\COGS\COGSCalculator;
+use Profitly\COGS\COGSCalculator;
 use WC_Order;
 
 defined( 'ABSPATH' ) || exit;
@@ -27,22 +27,22 @@ final class GatewayFeeCalculator {
 	/**
 	 * Order meta key: percentage fee captured at order time.
 	 */
-	public const META_PERCENT = '_profitpress_gateway_fee_percent';
+	public const META_PERCENT = '_profitly_gateway_fee_percent';
 
 	/**
 	 * Order meta key: fixed fee captured at order time.
 	 */
-	public const META_FIXED = '_profitpress_gateway_fee_fixed';
+	public const META_FIXED = '_profitly_gateway_fee_fixed';
 
 	/**
 	 * Order meta key: which amount the percentage applies to.
 	 */
-	public const META_BASIS = '_profitpress_gateway_fee_basis';
+	public const META_BASIS = '_profitly_gateway_fee_basis';
 
 	/**
 	 * Order meta key: flag recording that a "fee unavailable" note was added.
 	 */
-	private const META_NOTE_ADDED = '_profitpress_fee_note_added';
+	private const META_NOTE_ADDED = '_profitly_fee_note_added';
 
 	/**
 	 * Calculate the gateway fee for an order.
@@ -131,7 +131,7 @@ final class GatewayFeeCalculator {
 		}
 
 		$order->add_order_note(
-			__( 'ProfitPress: gateway fee could not be calculated because no fee snapshot was recorded for this order (it predates the plugin or its settings).', 'profitpress' )
+			__( 'Profitly: gateway fee could not be calculated because no fee snapshot was recorded for this order (it predates the plugin or its settings).', 'profitly' )
 		);
 
 		$order->update_meta_data( self::META_NOTE_ADDED, 'yes' );

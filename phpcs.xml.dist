@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="ProfitPress">
-	<description>Coding standards for the ProfitPress plugin.</description>
+<ruleset name="Profitly">
+	<description>Coding standards for the Profitly plugin.</description>
 
 	<!-- Scan these locations. -->
 	<file>.</file>
@@ -51,7 +51,7 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element value="profitpress"/>
+				<element value="profitly"/>
 			</property>
 		</properties>
 	</rule>
@@ -70,8 +70,8 @@
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
-				<element value="profitpress"/>
-				<element value="ProfitPress"/>
+				<element value="profitly"/>
+				<element value="Profitly"/>
 			</property>
 		</properties>
 	</rule>

@@ -2,12 +2,12 @@
 /**
  * Plugin activation routine.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress;
+namespace Profitly;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
  * Runs once when the plugin is activated.
  *
  * Its single responsibility is to record the installed version. The uninstall
- * data-retention choice lives inside the single `profitpress_settings` option
+ * data-retention choice lives inside the single `profitly_settings` option
  * (see SettingsRegistry::get_defaults()), so there is nothing else to seed here.
  */
 final class Activator {
@@ -26,6 +26,6 @@ final class Activator {
 	 * @return void
 	 */
 	public static function activate(): void {
-		update_option( 'profitpress_version', PROFITPRESS_VERSION );
+		update_option( 'profitly_version', PROFITLY_VERSION );
 	}
 }

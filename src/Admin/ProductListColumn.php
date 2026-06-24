@@ -2,14 +2,14 @@
 /**
  * Gross margin column on the products admin list.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Admin;
+namespace Profitly\Admin;
 
-use ProfitPress\Profit\ProductMarginCalculator;
+use Profitly\Profit\ProductMarginCalculator;
 use WC_Product;
 use WP_Query;
 
@@ -28,12 +28,12 @@ final class ProductListColumn {
 	/**
 	 * Product meta key caching the margin percent for sorting only.
 	 */
-	public const META_MARGIN_CACHE = '_profitpress_margin_percent';
+	public const META_MARGIN_CACHE = '_profitly_margin_percent';
 
 	/**
 	 * Query var used to trigger sorting by margin.
 	 */
-	private const ORDERBY = 'profitpress_margin';
+	private const ORDERBY = 'profitly_margin';
 
 	/**
 	 * Register WordPress/WooCommerce hooks for this component.
@@ -69,13 +69,13 @@ final class ProductListColumn {
 			$new[ $key ] = $label;
 
 			if ( 'price' === $key ) {
-				$new['profitpress_margin'] = __( 'Gross Margin', 'profitpress' );
+				$new['profitly_margin'] = __( 'Gross Margin', 'profitly' );
 			}
 		}
 
 		// If there was no price column, append at the end.
-		if ( ! isset( $new['profitpress_margin'] ) ) {
-			$new['profitpress_margin'] = __( 'Gross Margin', 'profitpress' );
+		if ( ! isset( $new['profitly_margin'] ) ) {
+			$new['profitly_margin'] = __( 'Gross Margin', 'profitly' );
 		}
 
 		return $new;
@@ -89,7 +89,7 @@ final class ProductListColumn {
 	 * @return void
 	 */
 	public function render_column( string $column, int $product_id ): void {
-		if ( 'profitpress_margin' !== $column ) {
+		if ( 'profitly_margin' !== $column ) {
 			return;
 		}
 
@@ -113,7 +113,7 @@ final class ProductListColumn {
 		if ( ! empty( $margin['is_average'] ) ) {
 			printf(
 				'%1$s %2$s%%<br /><small>%3$s</small>',
-				esc_html__( 'Avg:', 'profitpress' ),
+				esc_html__( 'Avg:', 'profitly' ),
 				esc_html( $percent ),
 				wp_kses_post( $amount )
 			);
@@ -134,7 +134,7 @@ final class ProductListColumn {
 	 * @return array<string, string> Sortable columns including ours.
 	 */
 	public function register_sortable( array $columns ): array {
-		$columns['profitpress_margin'] = self::ORDERBY;
+		$columns['profitly_margin'] = self::ORDERBY;
 
 		return $columns;
 	}

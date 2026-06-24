@@ -2,12 +2,12 @@
 /**
  * Date-range selection for the reports layer.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Reports;
+namespace Profitly\Reports;
 
 use DateTimeImmutable;
 
@@ -138,14 +138,14 @@ final class DateRangeFilter {
 	public static function label_for( string $key ): string {
 		switch ( $key ) {
 			case 'today':
-				return __( 'Today', 'profitpress' );
+				return __( 'Today', 'profitly' );
 
 			case '7d':
-				return __( 'Last 7 days', 'profitpress' );
+				return __( 'Last 7 days', 'profitly' );
 
 			case '30d':
 			default:
-				return __( 'Last 30 days', 'profitpress' );
+				return __( 'Last 30 days', 'profitly' );
 		}
 	}
 
@@ -158,14 +158,14 @@ final class DateRangeFilter {
 	private static function previous_label_for( string $key ): string {
 		switch ( $key ) {
 			case 'today':
-				return __( 'vs previous day', 'profitpress' );
+				return __( 'vs previous day', 'profitly' );
 
 			case '7d':
-				return __( 'vs previous 7 days', 'profitpress' );
+				return __( 'vs previous 7 days', 'profitly' );
 
 			case '30d':
 			default:
-				return __( 'vs previous 30 days', 'profitpress' );
+				return __( 'vs previous 30 days', 'profitly' );
 		}
 	}
 }

@@ -1,21 +1,21 @@
 <?php
 /**
- * WP admin dashboard widget for ProfitPress.
+ * WP admin dashboard widget for Profitly.
  *
- * @package ProfitPress
+ * @package Profitly
  */
 
 declare( strict_types=1 );
 
-namespace ProfitPress\Dashboard;
+namespace Profitly\Dashboard;
 
 use DateTimeImmutable;
-use ProfitPress\Constants;
-use ProfitPress\Reports\DateRangeFilter;
-use ProfitPress\Reports\ProductPerformance;
-use ProfitPress\Reports\ProfitAggregator;
-use ProfitPress\Reports\ReportCache;
-use ProfitPress\Reports\ReportsPage;
+use Profitly\Constants;
+use Profitly\Reports\DateRangeFilter;
+use Profitly\Reports\ProductPerformance;
+use Profitly\Reports\ProfitAggregator;
+use Profitly\Reports\ReportCache;
+use Profitly\Reports\ReportsPage;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -33,7 +33,7 @@ final class DashboardWidget {
 	/**
 	 * The widget id.
 	 */
-	private const WIDGET_ID = 'profitpress_dashboard_widget';
+	private const WIDGET_ID = 'profitly_dashboard_widget';
 
 	/**
 	 * Register WordPress hooks for this component.
@@ -51,12 +51,12 @@ final class DashboardWidget {
 	 */
 	public function register_widget(): void {
 		/**
-		 * Toggle the ProfitPress dashboard widget. Pro can disable the free widget
+		 * Toggle the Profitly dashboard widget. Pro can disable the free widget
 		 * to substitute a richer one.
 		 *
 		 * @param bool $enabled Whether to register the widget.
 		 */
-		if ( ! apply_filters( 'profitpress_dashboard_widget_enabled', true ) ) {
+		if ( ! apply_filters( 'profitly_dashboard_widget_enabled', true ) ) {
 			return;
 		}
 
@@ -66,7 +66,7 @@ final class DashboardWidget {
 
 		wp_add_dashboard_widget(
 			self::WIDGET_ID,
-			__( 'ProfitPress: Last 7 Days', 'profitpress' ),
+			__( 'Profitly: Last 7 Days', 'profitly' ),
 			array( $this, 'render' )
 		);
 	}
